@@ -10,7 +10,6 @@ public abstract class TicketSystem {
     @Id
     @GeneratedValue
     protected UUID uuid;
-    protected int vendorId;
     protected String name;
     protected String location;
 
@@ -23,10 +22,6 @@ public abstract class TicketSystem {
 
     public UUID getUuid() {
         return uuid;
-    }
-
-    public int getVendorId() {
-        return vendorId;
     }
 
     public String getName() {
@@ -50,7 +45,6 @@ public abstract class TicketSystem {
         return "TicketSystem{" +
                 "uuid=" + uuid + '\'' +
                 ", name='" + name +
-                ", vendorId=" + vendorId +
                 " ,location='" + location + '\'' +
                 '}';
     }

@@ -6,24 +6,24 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Ticket {
-    private UUID uuid;
+    private long id;
     private LocalDate issueDate;
     private TicketStatus status;
-    private int vendorId;
+    private UUID vendorId;
 
     public Ticket(){}
 
-    public Ticket(LocalDate issueDate,TicketStatus status, int vendorId){
+    public Ticket(LocalDate issueDate,TicketStatus status, UUID vendorId){
         this.issueDate = issueDate;
         this.status = status;
         this.vendorId = vendorId;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public long getUuid() {
+        return id;
     }
 
-    public int getVendorId() {
+    public UUID getVendorId() {
         return vendorId;
     }
 
@@ -46,7 +46,7 @@ public class Ticket {
     @Override
     public String toString() {
         return "Ticket{" +
-                "uuid=" + uuid +
+                "uuid=" + id +
                 ", issueDate=" + issueDate +
                 ", vendorId=" + vendorId +
                 ", status=" + status +

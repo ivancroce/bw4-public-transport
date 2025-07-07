@@ -16,7 +16,6 @@ public class AuthorizedReseller extends TicketSystem{
         return "AuthorizedReseller{" +
                 "name='" + name + '\'' +
                 ", uuid=" + uuid +
-                ", vendorId=" + vendorId +
                 ", location='" + location + '\'' +
                 '}';
     }

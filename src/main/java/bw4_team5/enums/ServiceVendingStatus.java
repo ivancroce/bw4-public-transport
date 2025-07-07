@@ -1,5 +1,5 @@
 package bw4_team5.enums;
 
-public enum ServiceStatus {
+public enum ServiceVendingStatus {
     ACTIVE,NOT_ACTIVE
 }
