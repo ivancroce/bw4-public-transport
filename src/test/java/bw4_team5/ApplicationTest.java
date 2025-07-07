@@ -1,4 +1,4 @@
-package ictech;
+package bw4_team5;
 
 import org.junit.jupiter.api.Test;
 

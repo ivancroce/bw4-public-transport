@@ -1,4 +1,4 @@
-package ictech;
+package bw4_team5;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
