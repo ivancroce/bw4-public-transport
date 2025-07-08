@@ -1,36 +1,35 @@
 package bw4_team5.entities;
 
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "routes")
 public class Route {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "route_id")
     private long id;
-    private String terminal;
+    @Column(name = "start_route")
     private String startRoute;
-    private int expectedTime;
-    private int effectiveTime;
+    private String terminal;
+    @Column(name = "estimated_travel_time")
+    private int estimatedTravelTime;
+
+    @OneToMany(mappedBy = "route")
+    private List<TravelRoute> travelRoutes= new ArrayList<>();
 
     public Route(){}
 
-    public Route(long id,String terminal,String startRoute,int expectedTime,int effectiveTime){
+    public Route(long id, String startRoute, String terminal, int estimatedTravelTime, List<TravelRoute> travelRoutes) {
         this.id = id;
-        this.terminal = terminal;
         this.startRoute = startRoute;
-        this.expectedTime = expectedTime;
-        this.effectiveTime =effectiveTime;
-    }
-
-    public int getEffectiveTime() {
-        return effectiveTime;
-    }
-
-    public void setEffectiveTime(int effectiveTime) {
-        this.effectiveTime = effectiveTime;
-    }
-
-    public int getExpectedTime() {
-        return expectedTime;
-    }
-
-    public void setExpectedTime(int expectedTime) {
-        this.expectedTime = expectedTime;
+        this.terminal = terminal;
+        this.estimatedTravelTime = estimatedTravelTime;
+        this.travelRoutes = travelRoutes;
     }
 
     public long getId() {
@@ -53,14 +52,30 @@ public class Route {
         this.terminal = terminal;
     }
 
+    public int getEstimatedTravelTime() {
+        return estimatedTravelTime;
+    }
+
+    public void setEstimatedTravelTime(int estimatedTravelTime) {
+        this.estimatedTravelTime = estimatedTravelTime;
+    }
+
+    public List<TravelRoute> getTravelRoutes() {
+        return travelRoutes;
+    }
+
+    public void setTravelRoutes(List<TravelRoute> travelRoutes) {
+        this.travelRoutes = travelRoutes;
+    }
+
     @Override
     public String toString() {
         return "Route{" +
-                "id=" + id + '\'' +
-                ", startRoute='" + startRoute +
-                ", terminal='" + terminal +
-                ", expectedTime=" + expectedTime +
-                ", effectiveTime=" + effectiveTime + '\'' +
+                "id=" + id +
+                ", startRoute='" + startRoute + '\'' +
+                ", terminal='" + terminal + '\'' +
+                ", estimatedTravelTime=" + estimatedTravelTime +
+                ", travelRoutes=" + travelRoutes +
                 '}';
     }
 }

@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "vehicle_state_logs")
-public class VehicleStateLogs {
+public class VehicleStateLog {
     @Id
     @GeneratedValue
     private long id;
@@ -20,9 +20,9 @@ public class VehicleStateLogs {
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
-    public VehicleStateLogs(){}
+    public VehicleStateLog(){}
 
-    public VehicleStateLogs(LocalDate startDate, long id, String cause, LocalDate endDate) {
+    public VehicleStateLog(LocalDate startDate, long id, String cause, LocalDate endDate) {
         this.startDate = startDate;
         this.id = id;
         this.cause = cause;

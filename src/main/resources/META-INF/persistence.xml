@@ -16,9 +16,11 @@
         <class>bw4_team5.entities.Card</class>
         <class>bw4_team5.entities.User</class>
         <class>bw4_team5.entities.Vehicle</class>
-        <class>bw4_team5.entities.VehicleStateLogs</class>
+        <class>bw4_team5.entities.VehicleStateLog</class>
         <class>bw4_team5.entities.Bus</class>
         <class>bw4_team5.entities.Tram</class>
+        <class>bw4_team5.entities.Route</class>
+        <class>bw4_team5.entities.TravelRoute</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url"
                       value="jdbc:postgresql://localhost:5432/bw4_public_transport_db"/>

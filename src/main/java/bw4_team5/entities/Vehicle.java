@@ -26,7 +26,10 @@ public abstract class Vehicle {
     private List<Ticket> ticketList= new ArrayList<>();
 
     @OneToMany(mappedBy = "vehicle")
-    private List<VehicleStateLogs> vehicleStateLogsList= new ArrayList<>();
+    private List<VehicleStateLog> vehicleStateLogsList= new ArrayList<>();
+
+    @OneToMany(mappedBy = "vehicle")
+    private List<TravelRoute> travelRoutes= new ArrayList<>();
 
 
     public Vehicle(){}
