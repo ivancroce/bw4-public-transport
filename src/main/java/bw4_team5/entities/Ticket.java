@@ -11,7 +11,7 @@ import java.util.UUID;
 public class Ticket {
     @Id
     @GeneratedValue
-    private long id;
+    private UUID id;
     @Column(name = "issue_date")
     private LocalDate issueDate;
     @Enumerated(EnumType.STRING)
@@ -32,7 +32,7 @@ public class Ticket {
         this.status = status;
     }
 
-    public long getUuid() {
+    public UUID getUuid() {
         return id;
     }
 

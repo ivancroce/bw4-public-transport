@@ -17,16 +17,20 @@ public class Card {
 
     @OneToMany(mappedBy = "card")
     private List <Subscription> subscriptionList= new ArrayList<>();
+    @OneToOne(mappedBy = "card")
+    private Subscription subscription;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     public Card(){}
 
-    public Card(LocalDate expirationDate, long id, LocalDate issueDate) {
-        this.expirationDate = expirationDate.plusDays(365);
+    public Card(long id, LocalDate issueDate, Subscription subscription) {
         this.id = id;
         this.issueDate = issueDate;
+        this.expirationDate = issueDate.plusDays(365);
+        this.subscription=subscription;
     }
 
     public LocalDate getExpirationDate() {

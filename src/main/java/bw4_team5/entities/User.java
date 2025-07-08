@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
-public abstract class User {
+public class User {
     @Id
     @GeneratedValue
     protected long id;
@@ -18,11 +18,21 @@ public abstract class User {
 
     public User(){}
 
-    public User( long id,String firstName, String lastName) {
+    public User( long id,String firstName, String lastName, Card card,UserType userType) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.card = card;
+        this.userType = userType;
     }
+
+    public User( long id,String firstName, String lastName,UserType userType) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userType = userType;
+    }
+
 
     public String getFirstName() {
         return firstName;
@@ -44,12 +54,30 @@ public abstract class User {
         this.lastName = lastName;
     }
 
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName +
-                ", id=" + id + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", card=" + card +
+                ", userType=" + userType +
                 '}';
     }
 }

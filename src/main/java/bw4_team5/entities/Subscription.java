@@ -4,13 +4,14 @@ import bw4_team5.enums.TypeSubscription;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "subscriptions")
 public class Subscription {
     @Id
     @GeneratedValue
-    private long id;
+    private UUID id;
     private LocalDate issueDate;
     @Enumerated(EnumType.STRING)
     private TypeSubscription type;
@@ -19,19 +20,18 @@ public class Subscription {
     @JoinColumn(name = "vendor_id")
     private TicketSystem vendorId;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "card_id")
     private Card card;
 
     public Subscription(){}
 
-    public Subscription(long id, LocalDate issueDate, TypeSubscription type) {
-        this.id = id;
+    public Subscription( LocalDate issueDate, TypeSubscription type) {
         this.issueDate = issueDate;
         this.type = type;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
