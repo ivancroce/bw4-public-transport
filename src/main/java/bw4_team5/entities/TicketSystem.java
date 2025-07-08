@@ -2,16 +2,25 @@ package bw4_team5.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED )
+@Table(name = "tickets_system")
 public abstract class TicketSystem {
     @Id
     @GeneratedValue
     protected UUID uuid;
     protected String name;
     protected String location;
+
+    @OneToMany(mappedBy = "vendorId")
+    private List <Ticket> ticketList= new ArrayList<>();
+
+    @OneToMany(mappedBy = "vendorId")
+    private List<Subscription> subscriptionList= new ArrayList<>();
 
     public TicketSystem(){}
 

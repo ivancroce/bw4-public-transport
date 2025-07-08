@@ -1,13 +1,18 @@
 package bw4_team5.entities;
 
 import bw4_team5.enums.ServiceVehicleStatus;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
+@Entity
+@DiscriminatorValue("buses")
 public class Bus extends Vehicle{
 
     public Bus(){}
 
-    public Bus(long id, String numberPlate, int registrationYear, ServiceVehicleStatus status,int capacity,Route route){
-        super(id, numberPlate, registrationYear, route, status, capacity);
+    public Bus(long id, String numberPlate, int registrationYear, ServiceVehicleStatus status,int capacity){
+        super(id, numberPlate, registrationYear, status, capacity);
     }
 
     @Override
@@ -16,7 +21,6 @@ public class Bus extends Vehicle{
                 "id=" + id +
                 ", numberPlate='" + numberPlate + '\'' +
                 ", registrationYear=" + registrationYear +
-                ", route=" + route +
                 ", status=" + status +
                 ", capacity=" + capacity +
                 '}';

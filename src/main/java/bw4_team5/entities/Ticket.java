@@ -1,30 +1,39 @@
 package bw4_team5.entities;
 
 import bw4_team5.enums.TicketStatus;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tickets")
 public class Ticket {
+    @Id
+    @GeneratedValue
     private long id;
+    @Column(name = "issue_date")
     private LocalDate issueDate;
+    @Enumerated(EnumType.STRING)
     private TicketStatus status;
-    private UUID vendorId;
+
+    @ManyToOne
+    @JoinColumn(name = "vendor_id")
+    private TicketSystem vendorId;
+
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
 
     public Ticket(){}
 
-    public Ticket(LocalDate issueDate,TicketStatus status, UUID vendorId){
+    public Ticket(LocalDate issueDate,TicketStatus status){
         this.issueDate = issueDate;
         this.status = status;
-        this.vendorId = vendorId;
     }
 
     public long getUuid() {
         return id;
-    }
-
-    public UUID getVendorId() {
-        return vendorId;
     }
 
     public TicketStatus getStatus() {

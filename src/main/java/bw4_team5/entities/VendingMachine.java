@@ -1,12 +1,16 @@
 package bw4_team5.entities;
 
 import bw4_team5.enums.ServiceVendingStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
+
+import java.util.UUID;
 
 @Entity
+@Table(name = "vending_machine")
 public class VendingMachine extends TicketSystem{
+    @Id
+    @GeneratedValue
+    private UUID uuid;
     @Enumerated(EnumType.STRING)
     private ServiceVendingStatus status;
 

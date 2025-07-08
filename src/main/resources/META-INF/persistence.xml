@@ -8,6 +8,17 @@
     <!-- The persistence unit is used to configure the connection to a specific database. -->
     <persistence-unit name="bw4_public_transport_pu">
         <!-- All @Entity here: -->
+        <class>bw4_team5.entities.TicketSystem</class>
+        <class>bw4_team5.entities.VendingMachine</class>
+        <class>bw4_team5.entities.AuthorizedReseller</class>
+        <class>bw4_team5.entities.Ticket</class>
+        <class>bw4_team5.entities.Subscription</class>
+        <class>bw4_team5.entities.Card</class>
+        <class>bw4_team5.entities.User</class>
+        <class>bw4_team5.entities.Vehicle</class>
+        <class>bw4_team5.entities.VehicleStateLogs</class>
+        <class>bw4_team5.entities.Bus</class>
+        <class>bw4_team5.entities.Tram</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url"
                       value="jdbc:postgresql://localhost:5432/bw4_public_transport_db"/>

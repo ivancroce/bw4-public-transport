@@ -1,23 +1,41 @@
 package bw4_team5.entities;
 
 import bw4_team5.enums.ServiceVehicleStatus;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "vehicle_type")
+@Table
 public abstract class Vehicle {
+    @Id
+    @GeneratedValue
     protected long id;
+    @Column(name = "number_plate")
     protected String numberPlate;
+    @Column(name = "registration_year")
     protected int registrationYear;
+    @Enumerated(EnumType.STRING)
     protected ServiceVehicleStatus status;
     protected int capacity;
-    protected Route route;
+
+    @OneToMany(mappedBy = "vehicle")
+    private List<Ticket> ticketList= new ArrayList<>();
+
+    @OneToMany(mappedBy = "vehicle")
+    private List<VehicleStateLogs> vehicleStateLogsList= new ArrayList<>();
+
 
     public Vehicle(){}
 
-    public Vehicle(long id, String numberPlate, int registrationYear, Route route, ServiceVehicleStatus status,int capacity) {
+    public Vehicle(long id, String numberPlate, int registrationYear, ServiceVehicleStatus status,int capacity) {
         this.id = id;
         this.capacity = capacity;
         this.numberPlate = numberPlate;
         this.registrationYear = registrationYear;
-        this.route = route;
         this.status = status;
     }
 
@@ -49,14 +67,6 @@ public abstract class Vehicle {
         this.registrationYear = registrationYear;
     }
 
-    public Route getRoute() {
-        return route;
-    }
-
-    public void setRoute(Route route) {
-        this.route = route;
-    }
-
     public ServiceVehicleStatus getStatus() {
         return status;
     }
@@ -72,7 +82,6 @@ public abstract class Vehicle {
                 ", numberPlate='" + numberPlate + '\'' +
                 ", registrationYear=" + registrationYear +
                 ", status=" + status +
-                ", route=" + route +
                 ", capacity=" + capacity +
                 '}';
     }

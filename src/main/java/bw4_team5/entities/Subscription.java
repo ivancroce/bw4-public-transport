@@ -1,35 +1,38 @@
 package bw4_team5.entities;
 
 import bw4_team5.enums.TypeSubscription;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
+@Entity
+@Table(name = "subscriptions")
 public class Subscription {
+    @Id
+    @GeneratedValue
     private long id;
     private LocalDate issueDate;
+    @Enumerated(EnumType.STRING)
     private TypeSubscription type;
-    private UUID vendorId;
+
+    @ManyToOne
+    @JoinColumn(name = "vendor_id")
+    private TicketSystem vendorId;
+
+    @ManyToOne
+    @JoinColumn(name = "card_id")
+    private Card card;
 
     public Subscription(){}
 
-    public Subscription(long id, LocalDate issueDate, TypeSubscription type, UUID vendorId) {
+    public Subscription(long id, LocalDate issueDate, TypeSubscription type) {
         this.id = id;
         this.issueDate = issueDate;
         this.type = type;
-        this.vendorId = vendorId;
     }
 
     public long getId() {
         return id;
-    }
-
-    public UUID getVendorId() {
-        return vendorId;
-    }
-
-    public void setVendorId(UUID vendorId) {
-        this.vendorId = vendorId;
     }
 
     public TypeSubscription getType() {

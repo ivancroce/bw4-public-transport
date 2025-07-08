@@ -1,9 +1,20 @@
 package bw4_team5.entities;
 
+import bw4_team5.enums.UserType;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "users")
 public abstract class User {
+    @Id
+    @GeneratedValue
     protected long id;
     protected String firstName;
     protected String lastName;
+    @OneToOne(mappedBy = "user")
+    private Card card;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 
     public User(){}
 

@@ -1,11 +1,25 @@
 package bw4_team5.entities;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "cards")
 public class Card {
+    @Id
+    @GeneratedValue
     private long id;
     private LocalDate issueDate;
     private LocalDate expirationDate;
+
+    @OneToMany(mappedBy = "card")
+    private List <Subscription> subscriptionList= new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Card(){}
 
