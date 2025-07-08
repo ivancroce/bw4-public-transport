@@ -20,15 +20,18 @@ public class Subscription {
     @JoinColumn(name = "vendor_id")
     private TicketSystem vendorId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "card_id")
     private Card card;
 
-    public Subscription(){}
+    public Subscription() {
+    }
 
-    public Subscription( LocalDate issueDate, TypeSubscription type) {
+    public Subscription(LocalDate issueDate, TypeSubscription type, TicketSystem vendorId, Card card) {
         this.issueDate = issueDate;
         this.type = type;
+        this.vendorId = vendorId;
+        this.card = card;
     }
 
     public UUID getId() {

@@ -1,10 +1,14 @@
 package bw4_team5;
 
+import bw4_team5.dao.SubscriptionDAO;
 import bw4_team5.dao.TicketSystemDAO;
 import bw4_team5.dao.UserDAO;
 import bw4_team5.dao.VehicleDAO;
 import bw4_team5.entities.*;
-import bw4_team5.enums.*;
+import bw4_team5.enums.ServiceVehicleStatus;
+import bw4_team5.enums.ServiceVendingStatus;
+import bw4_team5.enums.TicketStatus;
+import bw4_team5.enums.UserType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -22,6 +26,7 @@ public class Application {
         TicketSystemDAO tsd = new TicketSystemDAO(em);
         UserDAO ud = new UserDAO(em);
         VehicleDAO vd = new VehicleDAO(em);
+        SubscriptionDAO sd = new SubscriptionDAO(em);
 
         //CREATION RECORD TICKETSYSTEM
         AuthorizedReseller reseller1 = new AuthorizedReseller("FrancoSrl", "Roma");
@@ -29,10 +34,12 @@ public class Application {
         // tsd.save(reseller1);
         // tsd.save(machine1);
 
-        //CREATION RECORD SUBSCRIPTIONS
-        Subscription subscription1 = new Subscription(LocalDate.of(2024, 8, 8), TypeSubscription.MONTHLY);
-        Subscription subscription2 = new Subscription(LocalDate.of(2025, 6, 30), TypeSubscription.MONTHLY);
+        // ------- TEST ------- Create User
+        /* User mario = new User("Mario", "Balotelli", UserType.CUSTOMER);
+        Card mariosCard = new Card(mario);
+        mario.setCard(mariosCard);
 
+        ud.save(mario); */
 
         //CREATION RECORD TICKETS
         Ticket ticket1 = new Ticket(LocalDate.of(2025, 7, 8), TicketStatus.NOT_ENDORSED);
@@ -42,15 +49,13 @@ public class Application {
         Ticket ticket2 = new Ticket(LocalDate.of(2022, 3, 4), TicketStatus.NOT_ENDORSED);
 
         //CREATION RECORD USERS
-        Card card1 = new Card(1, LocalDate.of(2025, 9, 29), subscription1);
-        User user1 = new User(1, "Mario", "Balotelli", card1, UserType.CUSTOMER);
-        User admin1 = new User(2, "Mirco", "l'amministratore", UserType.ADMIN);
-        User user2 = new User(3, "Gino", "L'utente", UserType.CUSTOMER);
-        User user3 = new User(1, "Daniele", "IlTesserato", new Card(2, LocalDate.of(2025, 4, 1), subscription2), UserType.CUSTOMER);
+        User user1 = new User("Mario", "Balotelli", UserType.CUSTOMER);
+        User admin1 = new User("Mirco", "l'amministratore", UserType.ADMIN);
+        User user2 = new User("Gino", "L'utente", UserType.CUSTOMER);
 
         // ud.save(user1);
         // ud.save(user2);
-        // ud.save(user3);
+
 
         //CREATION RECORD VEHICLES
         Vehicle bus1 = new Bus("BH000ZS", 2025, ServiceVehicleStatus.MAINTENANCE, 40);

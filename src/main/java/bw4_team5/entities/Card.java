@@ -16,21 +16,19 @@ public class Card {
     private LocalDate expirationDate;
 
     @OneToMany(mappedBy = "card")
-    private List <Subscription> subscriptionList= new ArrayList<>();
-    @OneToOne(mappedBy = "card")
-    private Subscription subscription;
+    private List<Subscription> subscriptionList = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Card(){}
+    public Card() {
+    }
 
-    public Card(long id, LocalDate issueDate, Subscription subscription) {
-        this.id = id;
-        this.issueDate = issueDate;
-        this.expirationDate = issueDate.plusDays(365);
-        this.subscription=subscription;
+    public Card(User user) {
+        this.issueDate = LocalDate.now();
+        this.expirationDate = issueDate.plusYears(1);
+        this.user = user;
     }
 
     public LocalDate getExpirationDate() {
