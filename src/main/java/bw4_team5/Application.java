@@ -61,8 +61,8 @@ public class Application {
         Vehicle tram2 = new Tram("SS222RR", 2010, ServiceVehicleStatus.IN_SERVICE, 120);
         Vehicle tram3 = new Tram("GH333TT", 2015, ServiceVehicleStatus.IN_SERVICE, 140);
 
-        // vd.save(bus1);
-        /*vd.save(bus2);
+        /*vd.save(bus1);
+        vd.save(bus2);
         vd.save(bus3);
         vd.save(tram1);
         vd.save(tram2);
