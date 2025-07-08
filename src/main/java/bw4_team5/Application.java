@@ -1,14 +1,8 @@
 package bw4_team5;
 
-import bw4_team5.dao.SubscriptionDAO;
-import bw4_team5.dao.TicketSystemDAO;
-import bw4_team5.dao.UserDAO;
-import bw4_team5.dao.VehicleDAO;
+import bw4_team5.dao.*;
 import bw4_team5.entities.*;
-import bw4_team5.enums.ServiceVehicleStatus;
-import bw4_team5.enums.ServiceVendingStatus;
-import bw4_team5.enums.TicketStatus;
-import bw4_team5.enums.UserType;
+import bw4_team5.enums.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -27,6 +21,7 @@ public class Application {
         UserDAO ud = new UserDAO(em);
         VehicleDAO vd = new VehicleDAO(em);
         SubscriptionDAO sd = new SubscriptionDAO(em);
+        CardDAO cd = new CardDAO(em);
 
         //CREATION RECORD TICKETSYSTEM
         AuthorizedReseller reseller1 = new AuthorizedReseller("FrancoSrl", "Roma");
@@ -35,11 +30,21 @@ public class Application {
         // tsd.save(machine1);
 
         // ------- TEST ------- Create User
-        /* User mario = new User("Mario", "Balotelli", UserType.CUSTOMER);
-        Card mariosCard = new Card(mario);
-        mario.setCard(mariosCard);
+        User mario = new User("Mario", "Balotelli", UserType.CUSTOMER);
 
-        ud.save(mario); */
+        // ud.save(mario);
+
+        User marioFromDb = ud.findUserById(302);
+
+        Card mariosCard = new Card(marioFromDb);
+        // cd.save(mariosCard);
+
+        Card mariosCardFromDb = cd.findCardById(2);
+
+        TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("82b3c849-c2aa-4dc9-9a7e-4b67f71d2f92");
+        Subscription mariosSub = new Subscription(LocalDate.of(2025, 6, 12), TypeSubscription.MONTHLY, machine1FromDb, mariosCardFromDb);
+        sd.save(mariosSub);
+        System.out.println("Subscription saved for " + mario.getFirstName());
 
         //CREATION RECORD TICKETS
         Ticket ticket1 = new Ticket(LocalDate.of(2025, 7, 8), TicketStatus.NOT_ENDORSED);
@@ -49,7 +54,6 @@ public class Application {
         Ticket ticket2 = new Ticket(LocalDate.of(2022, 3, 4), TicketStatus.NOT_ENDORSED);
 
         //CREATION RECORD USERS
-        User user1 = new User("Mario", "Balotelli", UserType.CUSTOMER);
         User admin1 = new User("Mirco", "l'amministratore", UserType.ADMIN);
         User user2 = new User("Gino", "L'utente", UserType.CUSTOMER);
 

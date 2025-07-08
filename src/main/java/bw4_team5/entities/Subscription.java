@@ -12,23 +12,32 @@ public class Subscription {
     @Id
     @GeneratedValue
     private UUID id;
-    private LocalDate issueDate;
+    @Column(name = "start_date", nullable = false)
+    private LocalDate startDate;
+    @Column(name = "end_date", nullable = false)
+    private LocalDate endDate;
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeSubscription type;
 
     @ManyToOne
-    @JoinColumn(name = "vendor_id")
+    @JoinColumn(name = "vendor_id", nullable = false)
     private TicketSystem vendorId;
 
     @ManyToOne
-    @JoinColumn(name = "card_id")
+    @JoinColumn(name = "card_id", nullable = false)
     private Card card;
 
     public Subscription() {
     }
 
-    public Subscription(LocalDate issueDate, TypeSubscription type, TicketSystem vendorId, Card card) {
-        this.issueDate = issueDate;
+    public Subscription(LocalDate startDate, TypeSubscription type, TicketSystem vendorId, Card card) {
+        this.startDate = startDate;
+        if (type == TypeSubscription.MONTHLY) {
+            this.endDate = this.startDate.plusMonths(1);
+        } else {
+            this.endDate = this.startDate.plusWeeks(1);
+        }
         this.type = type;
         this.vendorId = vendorId;
         this.card = card;
@@ -36,6 +45,23 @@ public class Subscription {
 
     public UUID getId() {
         return id;
+    }
+
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public TypeSubscription getType() {
@@ -46,21 +72,15 @@ public class Subscription {
         this.type = type;
     }
 
-    public LocalDate getIssueDate() {
-        return issueDate;
+    public TicketSystem getVendorId() {
+        return vendorId;
     }
 
-    public void setIssueDate(LocalDate issueDate) {
-        this.issueDate = issueDate;
+    public Card getCard() {
+        return card;
     }
 
-    @Override
-    public String toString() {
-        return "Subscription{" +
-                "id=" + id +
-                ", issueDate=" + issueDate +
-                ", type=" + type +
-                ", vendorId=" + vendorId +
-                '}';
+    public void setCard(Card card) {
+        this.card = card;
     }
 }

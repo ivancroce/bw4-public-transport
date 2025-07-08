@@ -1,27 +1,27 @@
 package bw4_team5.dao;
 
-import bw4_team5.entities.Subscription;
+import bw4_team5.entities.Card;
 import bw4_team5.exceptions.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
-public class SubscriptionDAO {
+public class CardDAO {
     private final EntityManager entityManager;
 
-    public SubscriptionDAO(EntityManager entityManager) {
+    public CardDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    public void save(Subscription newSubscription) {
+    public void save(Card newCard) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        entityManager.persist(newSubscription);
+        entityManager.persist(newCard);
         transaction.commit();
-        System.out.println("Subscription with ID '" + newSubscription.getId() + "' has been successfully created!");
+        System.out.println("Card with ID '" + newCard.getId() + "' has been successfully created!");
     }
 
-    public Subscription findSubscriptionById(long id) {
-        Subscription found = entityManager.find(Subscription.class, id);
+    public Card findCardById(long id) {
+        Card found = entityManager.find(Card.class, id);
         if (found == null) throw new NotFoundException(id);
         return found;
     }
