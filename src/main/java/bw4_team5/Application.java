@@ -1,5 +1,6 @@
 package bw4_team5;
 
+import bw4_team5.dao.TicketSystemDAO;
 import bw4_team5.entities.*;
 import bw4_team5.enums.*;
 import jakarta.persistence.EntityManager;
@@ -62,6 +63,9 @@ public class Application {
 //
 //        Route route1 = new Route(1, "Bari","Roma", 300, travelRoutesBus1);
 
+        TicketSystemDAO tsd = new TicketSystemDAO(em);
+
+        tsd.save(reseller1);
 
         System.out.println("Hello World!");
     }
