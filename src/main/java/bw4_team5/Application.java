@@ -29,7 +29,7 @@ public class Application {
         // tsd.save(reseller1);
         // tsd.save(machine1);
 
-        // ------- TEST ------- Create User
+        // ------- TEST ------- Create User, Card and Subscription
         User mario = new User("Mario", "Balotelli", UserType.CUSTOMER);
 
         // ud.save(mario);
@@ -43,9 +43,11 @@ public class Application {
 
         TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("82b3c849-c2aa-4dc9-9a7e-4b67f71d2f92");
         Subscription mariosSub = new Subscription(LocalDate.of(2025, 6, 12), TypeSubscription.MONTHLY, machine1FromDb, mariosCardFromDb);
-        sd.save(mariosSub);
-        System.out.println("Subscription saved for " + mario.getFirstName());
+        // sd.save(mariosSub);
+        // System.out.println("Subscription saved for " + mario.getFirstName());
 
+        // ------- END TEST -------
+        
         //CREATION RECORD TICKETS
         Ticket ticket1 = new Ticket(LocalDate.of(2025, 7, 8), TicketStatus.NOT_ENDORSED);
         Ticket ticket3 = new Ticket(LocalDate.of(2025, 5, 7), TicketStatus.ENDORSED);
