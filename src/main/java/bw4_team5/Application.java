@@ -37,11 +37,11 @@ public class Application {
         Ticket ticket2 = new Ticket(LocalDate.of(2022, 3, 4), TicketStatus.NOT_ENDORSED);
 
         //CREATION RECORD USERS
-        Card card1 = new Card(1, LocalDate.of(2025, 9,29),subscription1);
+        /*Card card1 = new Card(1, LocalDate.of(2025, 9,29),subscription1);
         User user1 = new User(1,"Mario","Balotelli",card1, UserType.CUSTOMER);
         User admin1= new User(2, "Mirco", "l'amministratore", UserType.ADMIN);
         User user2 = new User(3, "Gino", "L'utente", UserType.CUSTOMER);
-        User user3 = new User(1,"Daniele","IlTesserato",new Card(2, LocalDate.of(2025, 4,1), subscription2), UserType.CUSTOMER);
+        User user3 = new User(1,"Daniele","IlTesserato",new Card(2, LocalDate.of(2025, 4,1), subscription2), UserType.CUSTOMER);*/
 
         //CREATION RECORD VEHICLES
         Vehicle bus1 = new Bus(1,"BH000ZS", 2025, ServiceVehicleStatus.MAINTENANCE,40);
@@ -52,20 +52,46 @@ public class Application {
         Vehicle tram2 = new Tram(2, "SS222RR", 2010, ServiceVehicleStatus.IN_SERVICE, 120);
         Vehicle tram3 = new Tram(3, "GH333TT", 2015, ServiceVehicleStatus.IN_SERVICE, 140);
 
-        //CREATION RECORD ROUTES
+        // --- SALVATAGGIO DATI NEL DATABASE ---
+        bw4_team5.dao.UserDAO userDAO = new bw4_team5.dao.UserDAO(em);
 
-//        List<TravelRoute> travelRoutesBus1 = new ArrayList<>();
-//
-//        TravelRoute firstRouteBus1 = new TravelRoute(1, 200, LocalDate.of(2025,7,8),bus1 );
-//
-//        travelRoutesBus1.add(firstRouteBus1);
-//        travelRoutesBus1.add
-//
-//        Route route1 = new Route(1, "Bari","Roma", 300, travelRoutesBus1);
+        bw4_team5.dao.VehicleDao vehicleDao = new bw4_team5.dao.VehicleDao(em);
 
-        TicketSystemDAO tsd = new TicketSystemDAO(em);
+        bw4_team5.dao.SubscriptionDAO subscriptionDAO = new bw4_team5.dao.SubscriptionDAO(em);
 
-        tsd.save(reseller1);
+        bw4_team5.dao.TicketSystemDAO ticketSystemDAO = new bw4_team5.dao.TicketSystemDAO(em);
+
+      /*  // Salva TicketSystem
+        ticketSystemDAO.save(reseller1);
+        ticketSystemDAO.save(machine1);*/
+
+        // Salva Subscriptions
+        subscriptionDAO.save(subscription1);
+        subscriptionDAO.save(subscription2);
+
+        // Crea e salva Card collegate alle Subscription
+        Card card1 = new Card(LocalDate.of(2025, 9,29), subscription1);
+        Card card2 = new Card(LocalDate.of(2025, 4,1), subscription2);
+
+        em.getTransaction().begin();
+
+      /*  em.persist(card1);
+        em.persist(card2);*/
+
+        em.getTransaction().commit();
+
+        // Crea Users collegando le Card già salvate
+        User user1 = new User("Mario","Balotelli",card1, UserType.CUSTOMER);
+        User admin1= new User("Mirco", "l'amministratore", UserType.ADMIN);
+        User user2 = new User("Gino", "L'utente", UserType.CUSTOMER);
+        User user3 = new User("Daniele","IlTesserato",card2, UserType.CUSTOMER);
+
+      /*  // Salva Users
+        userDAO.save(user1);
+        userDAO.save(admin1);
+        userDAO.save(user2);
+        userDAO.save(user3);*/
+
 
         System.out.println("Hello World!");
     }

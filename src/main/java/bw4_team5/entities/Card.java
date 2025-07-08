@@ -26,8 +26,7 @@ public class Card {
 
     public Card(){}
 
-    public Card(long id, LocalDate issueDate, Subscription subscription) {
-        this.id = id;
+    public Card(LocalDate issueDate, Subscription subscription) {
         this.issueDate = issueDate;
         this.expirationDate = issueDate.plusDays(365);
         this.subscription=subscription;

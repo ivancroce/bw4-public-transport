@@ -16,22 +16,19 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    public User(){}
-
-    public User( long id,String firstName, String lastName, Card card,UserType userType) {
-        this.id = id;
+    public User(String lastName, String firstName, Card card, UserType userType){
         this.firstName = firstName;
         this.lastName = lastName;
         this.card = card;
         this.userType = userType;
     }
 
-    public User( long id,String firstName, String lastName,UserType userType) {
-        this.id = id;
+    public User( String firstName, String lastName,UserType userType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userType = userType;
     }
+
 
 
     public String getFirstName() {
