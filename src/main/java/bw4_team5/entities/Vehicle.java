@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "vehicle_type")
-@Table
+@Table(name = "vehicles")
 public abstract class Vehicle {
     @Id
     @GeneratedValue
@@ -23,19 +23,19 @@ public abstract class Vehicle {
     protected int capacity;
 
     @OneToMany(mappedBy = "vehicle")
-    private List<Ticket> ticketList= new ArrayList<>();
+    private List<Ticket> ticketList = new ArrayList<>();
 
     @OneToMany(mappedBy = "vehicle")
-    private List<VehicleStateLog> vehicleStateLogsList= new ArrayList<>();
+    private List<VehicleStateLog> vehicleStateLogsList = new ArrayList<>();
 
     @OneToMany(mappedBy = "vehicle")
-    private List<TravelRoute> travelRoutes= new ArrayList<>();
+    private List<TravelRoute> travelRoutes = new ArrayList<>();
 
 
-    public Vehicle(){}
+    public Vehicle() {
+    }
 
-    public Vehicle(long id, String numberPlate, int registrationYear, ServiceVehicleStatus status,int capacity) {
-        this.id = id;
+    public Vehicle(String numberPlate, int registrationYear, ServiceVehicleStatus status, int capacity) {
         this.capacity = capacity;
         this.numberPlate = numberPlate;
         this.registrationYear = registrationYear;

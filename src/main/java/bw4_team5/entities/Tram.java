@@ -1,16 +1,18 @@
 package bw4_team5.entities;
 
 import bw4_team5.enums.ServiceVehicleStatus;
-import jakarta.persistence.*;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("trams")
-public class Tram extends Vehicle{
+@DiscriminatorValue("tram")
+public class Tram extends Vehicle {
 
-    public Tram(){}
+    public Tram() {
+    }
 
-    public Tram(long id, String numberPlate, int registrationYear, ServiceVehicleStatus status, int capacity){
-        super(id, numberPlate, registrationYear, status, capacity);
+    public Tram(String numberPlate, int registrationYear, ServiceVehicleStatus status, int capacity) {
+        super(numberPlate, registrationYear, status, capacity);
     }
 
     @Override

@@ -53,16 +53,16 @@ public class Application {
         // ud.save(user3);
 
         //CREATION RECORD VEHICLES
-        Vehicle bus1 = new Bus(1, "BH000ZS", 2025, ServiceVehicleStatus.MAINTENANCE, 40);
-        Vehicle bus2 = new Bus(2, "VG020GS", 1994, ServiceVehicleStatus.IN_SERVICE, 50);
-        Vehicle bus3 = new Bus(3, "YT030HH", 2009, ServiceVehicleStatus.IN_SERVICE, 35);
+        Vehicle bus1 = new Bus("BH000ZS", 2025, ServiceVehicleStatus.MAINTENANCE, 40);
+        Vehicle bus2 = new Bus("VG020GS", 1994, ServiceVehicleStatus.IN_SERVICE, 50);
+        Vehicle bus3 = new Bus("YT030HH", 2009, ServiceVehicleStatus.IN_SERVICE, 35);
 
-        Vehicle tram1 = new Tram(1, "XX987II", 2020, ServiceVehicleStatus.MAINTENANCE, 130);
-        Vehicle tram2 = new Tram(2, "SS222RR", 2010, ServiceVehicleStatus.IN_SERVICE, 120);
-        Vehicle tram3 = new Tram(3, "GH333TT", 2015, ServiceVehicleStatus.IN_SERVICE, 140);
+        Vehicle tram1 = new Tram("XX987II", 2020, ServiceVehicleStatus.MAINTENANCE, 130);
+        Vehicle tram2 = new Tram("SS222RR", 2010, ServiceVehicleStatus.IN_SERVICE, 120);
+        Vehicle tram3 = new Tram("GH333TT", 2015, ServiceVehicleStatus.IN_SERVICE, 140);
 
-        /*vd.save(bus1);
-        vd.save(bus2);
+        // vd.save(bus1);
+        /*vd.save(bus2);
         vd.save(bus3);
         vd.save(tram1);
         vd.save(tram2);
