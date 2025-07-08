@@ -4,10 +4,10 @@ import bw4_team5.entities.Vehicle;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
-public class VehicleDao {
+public class VehicleDAO {
     private final EntityManager entityManager;
 
-    public VehicleDao(EntityManager entityManager) {
+    public VehicleDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

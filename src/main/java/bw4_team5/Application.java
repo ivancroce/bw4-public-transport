@@ -1,6 +1,8 @@
 package bw4_team5;
 
 import bw4_team5.dao.TicketSystemDAO;
+import bw4_team5.dao.UserDAO;
+import bw4_team5.dao.VehicleDAO;
 import bw4_team5.entities.*;
 import bw4_team5.enums.*;
 import jakarta.persistence.EntityManager;
@@ -8,21 +10,24 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("bw4_public_transport_pu");
 
 
-
-
-
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
+
+        // Instances of DAO
+        TicketSystemDAO tsd = new TicketSystemDAO(em);
+        UserDAO ud = new UserDAO(em);
+        VehicleDAO vd = new VehicleDAO(em);
+
         //CREATION RECORD TICKETSYSTEM
         AuthorizedReseller reseller1 = new AuthorizedReseller("FrancoSrl", "Roma");
-        VendingMachine machine1 = new VendingMachine("AlbertoMachine","Milano", ServiceVendingStatus.ACTIVE);
+        VendingMachine machine1 = new VendingMachine("AlbertoMachine", "Milano", ServiceVendingStatus.ACTIVE);
+        // tsd.save(reseller1);
+        // tsd.save(machine1);
 
         //CREATION RECORD SUBSCRIPTIONS
         Subscription subscription1 = new Subscription(LocalDate.of(2024, 8, 8), TypeSubscription.MONTHLY);
@@ -37,20 +42,31 @@ public class Application {
         Ticket ticket2 = new Ticket(LocalDate.of(2022, 3, 4), TicketStatus.NOT_ENDORSED);
 
         //CREATION RECORD USERS
-        Card card1 = new Card(1, LocalDate.of(2025, 9,29),subscription1);
-        User user1 = new User(1,"Mario","Balotelli",card1, UserType.CUSTOMER);
-        User admin1= new User(2, "Mirco", "l'amministratore", UserType.ADMIN);
+        Card card1 = new Card(1, LocalDate.of(2025, 9, 29), subscription1);
+        User user1 = new User(1, "Mario", "Balotelli", card1, UserType.CUSTOMER);
+        User admin1 = new User(2, "Mirco", "l'amministratore", UserType.ADMIN);
         User user2 = new User(3, "Gino", "L'utente", UserType.CUSTOMER);
-        User user3 = new User(1,"Daniele","IlTesserato",new Card(2, LocalDate.of(2025, 4,1), subscription2), UserType.CUSTOMER);
+        User user3 = new User(1, "Daniele", "IlTesserato", new Card(2, LocalDate.of(2025, 4, 1), subscription2), UserType.CUSTOMER);
+
+        // ud.save(user1);
+        // ud.save(user2);
+        // ud.save(user3);
 
         //CREATION RECORD VEHICLES
-        Vehicle bus1 = new Bus(1,"BH000ZS", 2025, ServiceVehicleStatus.MAINTENANCE,40);
-        Vehicle bus2 = new Bus(2,"VG020GS", 1994, ServiceVehicleStatus.IN_SERVICE,50);
-        Vehicle bus3 = new Bus(3,"YT030HH", 2009, ServiceVehicleStatus.IN_SERVICE,35);
+        Vehicle bus1 = new Bus(1, "BH000ZS", 2025, ServiceVehicleStatus.MAINTENANCE, 40);
+        Vehicle bus2 = new Bus(2, "VG020GS", 1994, ServiceVehicleStatus.IN_SERVICE, 50);
+        Vehicle bus3 = new Bus(3, "YT030HH", 2009, ServiceVehicleStatus.IN_SERVICE, 35);
 
         Vehicle tram1 = new Tram(1, "XX987II", 2020, ServiceVehicleStatus.MAINTENANCE, 130);
         Vehicle tram2 = new Tram(2, "SS222RR", 2010, ServiceVehicleStatus.IN_SERVICE, 120);
         Vehicle tram3 = new Tram(3, "GH333TT", 2015, ServiceVehicleStatus.IN_SERVICE, 140);
+
+        /*vd.save(bus1);
+        vd.save(bus2);
+        vd.save(bus3);
+        vd.save(tram1);
+        vd.save(tram2);
+        vd.save(tram3);*/
 
         //CREATION RECORD ROUTES
 
@@ -63,10 +79,8 @@ public class Application {
 //
 //        Route route1 = new Route(1, "Bari","Roma", 300, travelRoutesBus1);
 
-        TicketSystemDAO tsd = new TicketSystemDAO(em);
 
-        tsd.save(reseller1);
-
-        System.out.println("Hello World!");
+        em.close();
+        emf.close();
     }
 }
