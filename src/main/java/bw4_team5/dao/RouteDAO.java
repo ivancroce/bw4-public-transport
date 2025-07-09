@@ -18,7 +18,7 @@ public class RouteDAO {
         transaction.begin();
         entityManager.persist(newRoute);
         transaction.commit();
-        System.out.println("La rotta da :"+ newRoute.getStartRoute() + "per : "+ newRoute.getTerminal()+" è stata creata correttamente!");
+        System.out.println("Route from :"+ newRoute.getStartRoute() + "to : "+ newRoute.getTerminal()+" it was created successfully!");
         } catch (Exception exception){
             System.out.println(exception.getMessage());
         }

@@ -18,7 +18,7 @@ public class TravelRouteDAO {
             transaction.begin();
             entityManager.persist(newTravelRoute);
             transaction.commit();
-            System.out.println("Il percorso :" + newTravelRoute.getId() +" è stato creato correttamente!");
+            System.out.println("TravelRoute :" + newTravelRoute.getId() +" It was created successfully!");
         } catch (Exception exception){
             System.out.println(exception.getMessage());
         }

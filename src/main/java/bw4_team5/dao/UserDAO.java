@@ -18,7 +18,7 @@ public class UserDAO {
         transaction.begin();
         entityManager.persist(newUser);
         transaction.commit();
-        System.out.println("L'utente" + newUser.getFirstName() + " è stato creato correttamente!");
+        System.out.println("User :" + newUser.getFirstName() + " it was created successfully!");
         } catch (Exception exception){
             System.out.println(exception.getMessage());
         }

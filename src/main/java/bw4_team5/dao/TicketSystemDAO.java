@@ -20,7 +20,7 @@ public class TicketSystemDAO {
         transaction.begin();
         entityManager.persist(newTicketSystem);
         transaction.commit();
-        System.out.println("Il rivenditore :" + newTicketSystem.getName() + " è stato creato correttamente!");
+        System.out.println("TicketSystem :" + newTicketSystem.getName() + " It was created successfully!");
         } catch (Exception exception){
             System.out.println(exception.getMessage());
         }

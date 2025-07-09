@@ -17,7 +17,7 @@ public class VehicleDAO {
             transaction.begin();
             entityManager.persist(newVehicle);
             transaction.commit();
-            System.out.println("Il veicolo " + newVehicle.getNumberPlate() + " è stato creato correttamente!");
+            System.out.println("The vehicle " + newVehicle.getNumberPlate() + " it was created successfully!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
