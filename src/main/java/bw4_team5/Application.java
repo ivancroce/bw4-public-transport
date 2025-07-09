@@ -26,6 +26,7 @@ public class Application {
         SubscriptionDAO sd = new SubscriptionDAO(em);
         CardDAO cd = new CardDAO(em);
         RouteDAO rd = new RouteDAO(em);
+        TravelRouteDAO trd = new TravelRouteDAO(em);
 
         //CREATION RECORD TICKETSYSTEM
         AuthorizedReseller reseller1 = new AuthorizedReseller("FrancoSrl", "Roma");
@@ -81,7 +82,7 @@ public class Application {
         vd.save(tram2);
         vd.save(tram3);*/
 
-        // Save routes
+        // Test save routes
         Route romeRoute = new Route("Rome Street", "Rome station", 120);
         Route milanRoute = new Route("Milan Street", "Milan station", 45);
         Route naplesRoute = new Route("Naples Street", "Naples station", 20);
@@ -89,8 +90,23 @@ public class Application {
         rd.save(milanRoute);
         rd.save(naplesRoute); */
 
-        // Save Travel Routes
-        // to continue
+        // Test Save Travel Routes
+        Vehicle bus2FromDb = vd.findBusById(53);
+        Route romeRouteFromdb = rd.findRouteById(52);
+        TravelRoute travel1 = new TravelRoute(bus2FromDb, romeRouteFromdb);
+        // trd.save(travel1);
+
+        // update the actualTravelTime if null
+        TravelRoute travel1FromDb = trd.findTravelRouteById(1);
+        try {
+            travel1FromDb.setActualTravelTime(90);
+            System.out.println("Travel route completed, actual travel time: " + travel1FromDb.getActualTravelTime() + " mins.");
+            // update in db
+            trd.updateActualTravelTime(travel1FromDb);
+            System.out.println("Travel route has been updated.");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
         em.close();
         emf.close();

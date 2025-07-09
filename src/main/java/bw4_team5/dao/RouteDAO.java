@@ -24,7 +24,7 @@ public class RouteDAO {
         }
     }
 
-    public Route findCardById(long id) {
+    public Route findRouteById(long id) {
         Route found = entityManager.find(Route.class, id);
         if (found == null) throw new NotFoundException(id);
         return found;
