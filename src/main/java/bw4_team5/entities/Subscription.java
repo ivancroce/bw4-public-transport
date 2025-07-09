@@ -12,11 +12,11 @@ public class Subscription {
     @Id
     @GeneratedValue
     private UUID id;
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date", nullable = true)
     private LocalDate startDate;
-    @Column(name = "end_date", nullable = false)
+    @Column(name = "end_date", nullable= true)
     private LocalDate endDate;
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Enumerated(EnumType.STRING)
     private TypeSubscription type;
 
@@ -41,6 +41,10 @@ public class Subscription {
         this.type = type;
         this.vendor = vendor;
         this.card = card;
+    }
+    public Subscription(TicketSystem vendor, Card card){
+        this.vendor=vendor;
+        this.card=card;
     }
 
     public UUID getId() {

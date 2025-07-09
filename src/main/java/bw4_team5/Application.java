@@ -37,19 +37,28 @@ public class Application {
 
         // ------- TEST ------- Create User, Card and Subscription
         User mario = new User("Mario", "Balotelli", UserType.CUSTOMER);
+        User pinoprovino = new User("Pino", "Provino", UserType.CUSTOMER);
+        ud.save(pinoprovino);
 
       //   ud.save(mario);
 
-        // User marioFromDb = ud.findUserById(1);
+        User marioFromDb = ud.findUserById(1);
+        User pinoFromDb = ud.findUserById(2);
 
-        // Card mariosCard = new Card(marioFromDb);
-       //  cd.save(mariosCard);
+        Card mariosCard = new Card(marioFromDb);
+        Card pinosCard = new Card(pinoFromDb);
+       // cd.save(mariosCard);
+       // cd.save(pinosCard);
 
       Card mariosCardFromDb = cd.findCardById(1);
+      Card pinosCardFromDb = cd.findCardById(2);
 //
         TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("7d8bec30-7c46-4cc0-9dfc-3fba16572186");
+        TicketSystem vendor1FromDb = tsd.findTicketSystemByUuid("13083734-fc55-4eb4-91b9-ff5907f0711e");
         Subscription mariosSub = new Subscription(LocalDate.of(2025, 6, 12), TypeSubscription.MONTHLY, machine1FromDb, mariosCardFromDb);
-         //sd.save(mariosSub);
+        Subscription pinosSub = new Subscription(vendor1FromDb, pinosCardFromDb);
+        // sd.save(mariosSub);
+        //sd.save(pinosSub);
 //         System.out.println("Subscription saved for " + mario.getFirstName());
 
         // ------- END TEST -------
@@ -96,7 +105,7 @@ public class Application {
 //
 //        Route route1 = new Route(1, "Bari","Roma", 300, travelRoutesBus1);
         Scanner scanner = new Scanner(System.in);
-
+/*
         int n = 0;
         do {
             System.out.println("Inserisci 1 per il pannello utente");
@@ -148,11 +157,25 @@ public class Application {
 
                 String subTry = scanner.nextLine();
                 if(subTry.equals("WEEKLY")){
-                    mariosSub.setType(TypeSubscription.WEEKLY);
-                    sd.setSubscriptionType(TypeSubscription.WEEKLY, 1);
+
+                    LocalDate startDate = LocalDate.now();
+                    LocalDate endDate= startDate.plusWeeks(1);
+
+                    pinosSub.setStartDate(startDate);
+                    pinosSub.setType(TypeSubscription.WEEKLY);
+                    sd.setSubscriptionType(TypeSubscription.WEEKLY, 2);
+                    pinosSub.setEndDate(startDate.plusWeeks(1));
+                    sd.setSubscriptionDate(startDate,endDate, 2);
+
+
                 }else {
-                    mariosSub.setType(TypeSubscription.MONTHLY);
-                    sd.setSubscriptionType(TypeSubscription.MONTHLY, 1);
+                    LocalDate startDate = LocalDate.now();
+                    LocalDate endDate= startDate.plusMonths(1);
+                    pinosSub.setStartDate(startDate);
+                    pinosSub.setType(TypeSubscription.MONTHLY);
+                    sd.setSubscriptionType(TypeSubscription.MONTHLY, 2);
+                    pinosSub.setEndDate(startDate.plusMonths(1));
+                    sd.setSubscriptionDate(startDate, endDate, 2);
                 }
 
                 System.out.println(mariosSub.getType());
@@ -171,7 +194,7 @@ public class Application {
             //
             //
 
-            }
+            }*/
 
             em.close();
             emf.close();
