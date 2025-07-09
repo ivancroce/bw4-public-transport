@@ -2,6 +2,7 @@ package bw4_team5.dao;
 
 import bw4_team5.entities.Ticket;
 import bw4_team5.entities.TicketSystem;
+import bw4_team5.entities.Vehicle;
 import bw4_team5.exceptions.UuidNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -23,13 +24,37 @@ public class TicketSystemDAO {
         System.out.println("Il rivenditore" + newTicketSystem.getName() + " è stato creato correttamente!");
     }
 
-    // Salva un nuovo Ticket
+    // Salva un nuovo Ticket, assicurandosi che il vendor sia presente
     public void saveTicket(Ticket ticket) {
+        if (ticket.getVendor() == null) {
+            throw new IllegalArgumentException("Il vendor deve essere specificato per il ticket.");
+        }
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(ticket);
         transaction.commit();
-        System.out.println("Biglietto creato! Stato del biglietto: " + ticket.getStatus());
+        System.out.println("Biglietto creato! Stato del biglietto: " + ticket.getStatus() + ", UUID venditore: " + ticket.getVendor().getUuid() + "nome venditore: " + ticket.getVendor().getName());
+    }
+
+    // Metodo per vidimare un biglietto e assegnare il veicolo
+    public void endorseTicket(UUID ticketId, long vehicleId) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Ticket ticket = entityManager.find(Ticket.class, ticketId);
+        if (ticket == null) {
+            transaction.rollback();
+            throw new IllegalArgumentException("Ticket non trovato.");
+        }
+        Vehicle vehicle = entityManager.find(bw4_team5.entities.Vehicle.class, vehicleId);
+        if (vehicle == null) {
+            transaction.rollback();
+            throw new IllegalArgumentException("Veicolo non trovato.");
+        }
+        ticket.setStatus(bw4_team5.enums.TicketStatus.ENDORSED);
+        ticket.setVehicle(vehicle);
+        entityManager.merge(ticket);
+        transaction.commit();
+        System.out.println("Biglietto vidimato! Stato: " + ticket.getStatus() + ", veicolo: " + vehicle.getId());
     }
 
     public TicketSystem findTicketSystemByUuid(String uuid) {

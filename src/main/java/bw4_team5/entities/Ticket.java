@@ -34,6 +34,12 @@ public class Ticket {
         this.status = status;
     }
 
+    public Ticket(LocalDate issueDate, TicketStatus status, TicketSystem vendor) {
+        this.issueDate = issueDate;
+        this.status = status;
+        this.vendor = vendor;
+    }
+
     public UUID getId() {
         return id;
     }

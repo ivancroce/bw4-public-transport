@@ -26,8 +26,14 @@ public class Application {
         //CREATION RECORD TICKETSYSTEM
         AuthorizedReseller reseller1 = new AuthorizedReseller("FrancoSrl", "Roma");
         VendingMachine machine1 = new VendingMachine("AlbertoMachine", "Milano", ServiceVendingStatus.ACTIVE);
-        // tsd.save(reseller1);
-        // tsd.save(machine1);
+        VendingMachine machine2 = new VendingMachine("GiovanniMachine", "Torino", ServiceVendingStatus.ACTIVE);
+
+
+                       // Salva la macchina nel database PRIMA di usare il suo UUID
+        tsd.save(machine1);
+
+        // Ora puoi recuperare la macchina tramite il suo UUID
+        TicketSystem machine1FromDb = tsd.findTicketSystemByUuid(machine1.getUuid().toString());
 
         // ------- TEST ------- Create User, Card and Subscription
         User mario = new User("Mario", "Balotelli", UserType.CUSTOMER);
@@ -36,12 +42,12 @@ public class Application {
 
         User marioFromDb = ud.findUserById(102);//inserire l'id corretto dell'utente dal DB
 
+        /*TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("de8bb635-8203-4aba-9274-f8c72527862b");*/  // inserire l'UUID corretto della macchina/venditore dal DB
         Card mariosCard = new Card(marioFromDb);
         // cd.save(mariosCard);
 
         Card mariosCardFromDb = cd.findCardById(52);//inserire l'id corretto della card dal DB
 
-        TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("de8bb635-8203-4aba-9274-f8c72527862b");// inserire l'UUID corretto della macchina/venditore dal DB
 
         Subscription mariosSub = new Subscription(LocalDate.of(2025, 6, 12), TypeSubscription.MONTHLY, machine1FromDb, mariosCardFromDb);
         // sd.save(mariosSub);
@@ -87,15 +93,15 @@ public class Application {
 //        TravelRoute firstRouteBus1 = new TravelRoute(1, 200, LocalDate.of(2025,7,8),bus1 );
 //
 //        travelRoutesBus1.add(firstRouteBus1);
+
 //        travelRoutesBus1.add
 //
 //        Route route1 = new Route(1, "Bari","Roma", 300, travelRoutesBus1);
 
         // Creazione e salvataggio di un biglietto con stato NOT_ENDORSED
+        Ticket ticket = new Ticket(LocalDate.now(), TicketStatus.NOT_ENDORSED, machine1FromDb);
 
-        Ticket ticket = new Ticket(LocalDate.now(), TicketStatus.NOT_ENDORSED);
-             /*CREAZIONE BIGLIETTO*/
-
+        /*SALVA BIGLIETTO*/
         tsd.saveTicket(ticket);
 
         em.close();
