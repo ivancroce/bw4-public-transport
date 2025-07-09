@@ -34,14 +34,15 @@ public class Application {
 
         // ud.save(mario);
 
-        User marioFromDb = ud.findUserById(302);
+        User marioFromDb = ud.findUserById(102);//inserire l'id corretto dell'utente dal DB
 
         Card mariosCard = new Card(marioFromDb);
         // cd.save(mariosCard);
 
-        Card mariosCardFromDb = cd.findCardById(2);
+        Card mariosCardFromDb = cd.findCardById(52);//inserire l'id corretto della card dal DB
 
-        TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("82b3c849-c2aa-4dc9-9a7e-4b67f71d2f92");
+        TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("de8bb635-8203-4aba-9274-f8c72527862b");// inserire l'UUID corretto della macchina/venditore dal DB
+
         Subscription mariosSub = new Subscription(LocalDate.of(2025, 6, 12), TypeSubscription.MONTHLY, machine1FromDb, mariosCardFromDb);
         // sd.save(mariosSub);
         // System.out.println("Subscription saved for " + mario.getFirstName());
@@ -90,6 +91,12 @@ public class Application {
 //
 //        Route route1 = new Route(1, "Bari","Roma", 300, travelRoutesBus1);
 
+        // Creazione e salvataggio di un biglietto con stato NOT_ENDORSED
+
+        Ticket ticket = new Ticket(LocalDate.now(), TicketStatus.NOT_ENDORSED);
+             /*CREAZIONE BIGLIETTO*/
+
+        tsd.saveTicket(ticket);
 
         em.close();
         emf.close();
