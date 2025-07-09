@@ -23,7 +23,7 @@ public class VehicleStateLogDAO {
         System.out.println("Il tipo di riparazione" + vehicleStateLog.getCause() + " è stato creato correttamente!");
     }
 
-    public VehicleStateLog findTicketSystemById(long id) {
+    public VehicleStateLog findVehicleStateLogById(long id) {
         VehicleStateLog found = entityManager.find(VehicleStateLog.class, id);
         if (found == null) throw new NotFoundException(id);
         return found;

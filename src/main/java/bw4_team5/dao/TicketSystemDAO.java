@@ -19,7 +19,7 @@ public class TicketSystemDAO {
         transaction.begin();
         entityManager.persist(newTicketSystem);
         transaction.commit();
-        System.out.println("Il rivenditore" + newTicketSystem.getName() + " è stato creato correttamente!");
+        System.out.println("Il rivenditore :" + newTicketSystem.getName() + " è stato creato correttamente!");
     }
 
     public TicketSystem findTicketSystemByUuid(String uuid) {
