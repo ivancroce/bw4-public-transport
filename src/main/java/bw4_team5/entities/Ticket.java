@@ -61,4 +61,8 @@ public class Ticket {
                 ", status=" + status +
                 '}';
     }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
 }
