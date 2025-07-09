@@ -16,11 +16,15 @@ public class VehicleStateLogDAO {
     }
 
     public void save(VehicleStateLog vehicleStateLog){
+        try {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(vehicleStateLog);
         transaction.commit();
         System.out.println("Il tipo di riparazione" + vehicleStateLog.getCause() + " è stato creato correttamente!");
+        } catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
     }
 
     public VehicleStateLog findVehicleStateLogById(long id) {

@@ -13,11 +13,15 @@ public class RouteDAO {
     }
 
     public void save(Route newRoute){
+        try {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(newRoute);
         transaction.commit();
         System.out.println("La rotta da :"+ newRoute.getStartRoute() + "per : "+ newRoute.getTerminal()+" è stata creata correttamente!");
+        } catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
     }
 
     public Route findRouteById(long id){
