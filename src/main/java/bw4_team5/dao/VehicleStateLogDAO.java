@@ -16,14 +16,18 @@ public class VehicleStateLogDAO {
     }
 
     public void save(VehicleStateLog vehicleStateLog){
+        try {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(vehicleStateLog);
         transaction.commit();
-        System.out.println("Il tipo di riparazione" + vehicleStateLog.getCause() + " è stato creato correttamente!");
+        System.out.println("The vehicleStateLog" + vehicleStateLog.getCause() + " it was created successfully!");
+        } catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
     }
 
-    public VehicleStateLog findTicketSystemById(long id) {
+    public VehicleStateLog findVehicleStateLogById(long id) {
         VehicleStateLog found = entityManager.find(VehicleStateLog.class, id);
         if (found == null) throw new NotFoundException(id);
         return found;

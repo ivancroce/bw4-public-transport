@@ -17,11 +17,15 @@ public class TicketSystemDAO {
     }
 
     public void save(TicketSystem newTicketSystem) {
+        try {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(newTicketSystem);
         transaction.commit();
-        System.out.println("Il rivenditore" + newTicketSystem.getName() + " è stato creato correttamente!");
+        System.out.println("TicketSystem :" + newTicketSystem.getName() + " It was created successfully!");
+        } catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
     }
 
     // Salva un nuovo Ticket, assicurandosi che il vendor sia presente

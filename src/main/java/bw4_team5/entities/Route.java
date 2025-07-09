@@ -24,8 +24,7 @@ public class Route {
 
     public Route(){}
 
-    public Route(long id, String startRoute, String terminal, int estimatedTravelTime, List<TravelRoute> travelRoutes) {
-        this.id = id;
+    public Route( String startRoute, String terminal, int estimatedTravelTime, List<TravelRoute> travelRoutes) {
         this.startRoute = startRoute;
         this.terminal = terminal;
         this.estimatedTravelTime = estimatedTravelTime;
