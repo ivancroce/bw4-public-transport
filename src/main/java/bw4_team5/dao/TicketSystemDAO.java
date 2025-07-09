@@ -15,11 +15,15 @@ public class TicketSystemDAO {
     }
 
     public void save(TicketSystem newTicketSystem) {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(newTicketSystem);
-        transaction.commit();
-        System.out.println("Il rivenditore" + newTicketSystem.getName() + " è stato creato correttamente!");
+        try {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.persist(newTicketSystem);
+            transaction.commit();
+            System.out.println("Il rivenditore" + newTicketSystem.getName() + " è stato creato correttamente!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public TicketSystem findTicketSystemByUuid(String uuid) {

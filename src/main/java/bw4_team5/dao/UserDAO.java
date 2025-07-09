@@ -13,11 +13,15 @@ public class UserDAO {
     }
 
     public void save(User newUser) {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(newUser);
-        transaction.commit();
-        System.out.println("L'utente" + newUser.getFirstName() + " è stato creato correttamente!");
+        try {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.persist(newUser);
+            transaction.commit();
+            System.out.println("L'utente " + newUser.getFirstName() + " è stato creato correttamente!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public User findUserById(long id) {

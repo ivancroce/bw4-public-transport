@@ -13,11 +13,15 @@ public class CardDAO {
     }
 
     public void save(Card newCard) {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(newCard);
-        transaction.commit();
-        System.out.println("Card with ID '" + newCard.getId() + "' has been successfully created!");
+        try {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.persist(newCard);
+            transaction.commit();
+            System.out.println("Card with ID '" + newCard.getId() + "' has been successfully created!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public Card findCardById(long id) {

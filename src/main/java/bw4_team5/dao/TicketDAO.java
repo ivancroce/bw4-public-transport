@@ -17,11 +17,15 @@ public class TicketDAO {
     }
 
     public void save(Ticket newTicket) {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(newTicket);
-        transaction.commit();
-        System.out.println("Ticket con UUID '" + newTicket.getUuid() + "' creato con successo!");
+        try {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.persist(newTicket);
+            transaction.commit();
+            System.out.println("Ticket con UUID '" + newTicket.getId() + "' creato con successo!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public Ticket findTicketByUuid(UUID uuid) {

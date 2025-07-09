@@ -34,17 +34,14 @@ public class Application {
 
         // ------- TEST ------- Create User, Card and Subscription
         User mario = new User("Mario", "Balotelli", UserType.CUSTOMER);
-
         // ud.save(mario);
 
-        User marioFromDb = ud.findUserById(302);
-
+        User marioFromDb = ud.findUserById(352);
         Card mariosCard = new Card(marioFromDb);
         // cd.save(mariosCard);
 
-        Card mariosCardFromDb = cd.findCardById(2);
-
-        TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("82b3c849-c2aa-4dc9-9a7e-4b67f71d2f92");
+        Card mariosCardFromDb = cd.findCardById(52);
+        TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("edee78f8-3ba4-4704-a001-95f84d3c9162");
         Subscription mariosSub = new Subscription(LocalDate.of(2025, 6, 12), TypeSubscription.MONTHLY, machine1FromDb, mariosCardFromDb);
         // sd.save(mariosSub);
         // System.out.println("Subscription saved for " + mario.getFirstName());
@@ -52,6 +49,7 @@ public class Application {
         // ------- END TEST -------
 
         //CREATION RECORD TICKETS
+
         /* Ticket ticket1 = new Ticket(LocalDate.of(2025, 7, 8), TicketStatus.NOT_ENDORSED);
         Ticket ticket3 = new Ticket(LocalDate.of(2025, 5, 7), TicketStatus.ENDORSED);
         Ticket ticket4 = new Ticket(LocalDate.of(2023, 4, 6), TicketStatus.NOT_ENDORSED);

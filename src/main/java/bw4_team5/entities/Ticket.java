@@ -80,8 +80,4 @@ public class Ticket {
                 ", vehicle=" + vehicle +
                 '}';
     }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
 }

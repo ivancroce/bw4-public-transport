@@ -18,10 +18,10 @@ public abstract class TicketSystem {
     @Column(nullable = false)
     protected String location;
 
-    @OneToMany(mappedBy = "vendorId")
+    @OneToMany(mappedBy = "vendor")
     private List<Ticket> ticketList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "vendorId")
+    @OneToMany(mappedBy = "vendor")
     private List<Subscription> subscriptionList = new ArrayList<>();
 
     public TicketSystem() {

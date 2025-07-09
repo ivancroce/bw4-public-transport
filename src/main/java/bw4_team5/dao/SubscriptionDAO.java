@@ -13,11 +13,15 @@ public class SubscriptionDAO {
     }
 
     public void save(Subscription newSubscription) {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(newSubscription);
-        transaction.commit();
-        System.out.println("Subscription with ID '" + newSubscription.getId() + "' has been successfully created!");
+        try {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.persist(newSubscription);
+            transaction.commit();
+            System.out.println("Subscription with ID '" + newSubscription.getId() + "' has been successfully created!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public Subscription findSubscriptionById(long id) {

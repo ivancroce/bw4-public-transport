@@ -11,9 +11,11 @@ public class User {
     protected long id;
     @Column(name = "first_name")
     protected String firstName;
+    @Column(name = "last_name")
     protected String lastName;
     @OneToOne(mappedBy = "user")
     private Card card;
+    @Column(name = "user_type")
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
