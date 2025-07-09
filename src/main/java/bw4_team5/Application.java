@@ -9,8 +9,11 @@ import bw4_team5.enums.UserType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToUrl;
 
 import java.time.LocalDate;
+import java.util.Scanner;
+import java.util.UUID;
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("bw4_public_transport_pu");
@@ -29,25 +32,25 @@ public class Application {
         //CREATION RECORD TICKETSYSTEM
         AuthorizedReseller reseller1 = new AuthorizedReseller("FrancoSrl", "Roma");
         VendingMachine machine1 = new VendingMachine("AlbertoMachine", "Milano", ServiceVendingStatus.ACTIVE);
-        // tsd.save(reseller1);
-        // tsd.save(machine1);
+//         tsd.save(reseller1);
+//        tsd.save(machine1);
 
         // ------- TEST ------- Create User, Card and Subscription
         User mario = new User("Mario", "Balotelli", UserType.CUSTOMER);
 
-        // ud.save(mario);
+      //   ud.save(mario);
 
-        User marioFromDb = ud.findUserById(302);
+        // User marioFromDb = ud.findUserById(1);
 
-        Card mariosCard = new Card(marioFromDb);
-        // cd.save(mariosCard);
+        // Card mariosCard = new Card(marioFromDb);
+       //  cd.save(mariosCard);
 
-        Card mariosCardFromDb = cd.findCardById(2);
-
-        TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("82b3c849-c2aa-4dc9-9a7e-4b67f71d2f92");
+      Card mariosCardFromDb = cd.findCardById(1);
+//
+        TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("7d8bec30-7c46-4cc0-9dfc-3fba16572186");
         Subscription mariosSub = new Subscription(LocalDate.of(2025, 6, 12), TypeSubscription.MONTHLY, machine1FromDb, mariosCardFromDb);
-        // sd.save(mariosSub);
-        // System.out.println("Subscription saved for " + mario.getFirstName());
+         //sd.save(mariosSub);
+//         System.out.println("Subscription saved for " + mario.getFirstName());
 
         // ------- END TEST -------
 
@@ -92,9 +95,87 @@ public class Application {
 //        travelRoutesBus1.add
 //
 //        Route route1 = new Route(1, "Bari","Roma", 300, travelRoutesBus1);
+        Scanner scanner = new Scanner(System.in);
+
+        int n = 0;
+        do {
+            System.out.println("Inserisci 1 per il pannello utente");
+            System.out.println("Inserisci il 2 per il pannello admin");
+            n = Integer.parseInt(scanner.nextLine());
+            if (n <= 0 || n > 2) {
+                System.out.println("Inserisci nuovamente il numero");
+            }
+        } while (n <= 0 || n > 2);
+        if (n == 1) {
 
 
-        em.close();
-        emf.close();
+            do {
+                System.out.println("Desideri acquistare un biglietto oppure un abbonamento? ");
+                System.out.println("Inserisci 1 per acquistare un biglietto");
+                System.out.println("Inserisci 2 per acquistare un abbonamento");
+                n = Integer.parseInt(scanner.nextLine());
+                if (n <= 0 || n > 2) {
+                    System.out.println("Inserisci nuovamente il numero");
+                }
+            } while (n <= 0 || n > 2);
+            if (n == 1) {
+                do {
+                    System.out.println("Desideri acquistare il biglietto da una macchinetta automatica o da un rivenditore autorizzato?");
+                    System.out.println("Inserisci 1 per acqusitare da una macchinetta automatica");
+                    System.out.println("Inserisci 2 per acquistare da un rivenditore autorizzato");
+                    n = Integer.parseInt(scanner.nextLine());
+                    if (n <= 0 || n > 2) {
+                        System.out.println("Inserisci nuovamente il numero");
+                    }
+                } while (n <= 0 || n > 2);
+                //scelta tratta e veicolo
+                System.out.println("Scegli la tratta per il tuo biglietto");
+                //output tratte
+                System.out.println("Scegli il veicolo che percorrerà la tratta");
+                //output veicoli
+
+            } else {
+                //controllo numero carta, checkCardByID
+                System.out.println("Inserisci l'Id della tua Tessera");
+                long inputCard = scanner.nextLong();
+                cd.findCardById(inputCard);
+                scanner.nextLine();
+                //checkExpirationById(inputCard);
+                // se la carta è scaduta va rinnovata
+
+                System.out.println("Vuoi sottoscrivere un abbonamento mensile o settimanale?");
+                System.out.println("Inserisci 'WEEKLY' o 'MONTHLY'");
+
+                String subTry = scanner.nextLine();
+                if(subTry.equals("WEEKLY")){
+                    mariosSub.setType(TypeSubscription.WEEKLY);
+                    sd.setSubscriptionType(TypeSubscription.WEEKLY, 1);
+                }else {
+                    mariosSub.setType(TypeSubscription.MONTHLY);
+                    sd.setSubscriptionType(TypeSubscription.MONTHLY, 1);
+                }
+
+                System.out.println(mariosSub.getType());
+
+                System.out.println("Il tuo abbonamento " + subTry + " è stato sottoscritto con successo");
+
+            }
+
+
+            }else{
+                    //calcolo tempo medio effettivo di percorrenza tratta da parte di un mezzo
+            //lista venditori autorizzati
+            //lista macchinette
+            //lista tram
+            //lista bus
+            //
+            //
+
+            }
+
+            em.close();
+            emf.close();
+
+
+        }
     }
-}

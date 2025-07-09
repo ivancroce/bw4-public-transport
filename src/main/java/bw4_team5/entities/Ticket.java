@@ -81,7 +81,5 @@ public class Ticket {
                 '}';
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
+
 }
