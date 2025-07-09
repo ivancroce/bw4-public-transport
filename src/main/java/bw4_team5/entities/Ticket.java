@@ -12,36 +12,30 @@ public class Ticket {
     @Id
     @GeneratedValue
     private UUID id;
-    @Column(name = "issue_date")
+    @Column(name = "issue_date", nullable = false)
     private LocalDate issueDate;
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TicketStatus status;
 
     @ManyToOne
     @JoinColumn(name = "vendor_id")
-    private TicketSystem vendorId;
+    private TicketSystem vendor;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
-    public Ticket(){}
+    public Ticket() {
+    }
 
-    public Ticket(LocalDate issueDate,TicketStatus status){
+    public Ticket(LocalDate issueDate, TicketStatus status) {
         this.issueDate = issueDate;
         this.status = status;
     }
 
-    public UUID getUuid() {
+    public UUID getId() {
         return id;
-    }
-
-    public TicketStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(TicketStatus status) {
-        this.status = status;
     }
 
     public LocalDate getIssueDate() {
@@ -52,17 +46,38 @@ public class Ticket {
         this.issueDate = issueDate;
     }
 
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "uuid=" + id +
-                ", issueDate=" + issueDate +
-                ", vendorId=" + vendorId +
-                ", status=" + status +
-                '}';
+    public TicketStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TicketStatus status) {
+        this.status = status;
+    }
+
+    public TicketSystem getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(TicketSystem vendor) {
+        this.vendor = vendor;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", issueDate=" + issueDate +
+                ", status=" + status +
+                ", vendor=" + vendor +
+                ", vehicle=" + vehicle +
+                '}';
     }
 }

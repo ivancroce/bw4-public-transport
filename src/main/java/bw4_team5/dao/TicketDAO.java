@@ -21,7 +21,7 @@ public class TicketDAO {
         transaction.begin();
         entityManager.persist(newTicket);
         transaction.commit();
-        System.out.println("Ticket con UUID '" + newTicket.getUuid() + "' creato con successo!");
+        System.out.println("Ticket con id '" + newTicket.getId() + "' creato con successo!");
     }
 
     public Ticket findTicketByUuid(UUID uuid) {

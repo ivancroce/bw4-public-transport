@@ -22,9 +22,8 @@ public class VehicleStateLog {
 
     public VehicleStateLog(){}
 
-    public VehicleStateLog(LocalDate startDate, long id, String cause, LocalDate endDate) {
+    public VehicleStateLog(LocalDate startDate, String cause, LocalDate endDate) {
         this.startDate = startDate;
-        this.id = id;
         this.cause = cause;
         this.endDate = endDate;
     }
@@ -55,6 +54,14 @@ public class VehicleStateLog {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     @Override

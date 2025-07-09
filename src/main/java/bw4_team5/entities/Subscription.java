@@ -22,7 +22,7 @@ public class Subscription {
 
     @ManyToOne
     @JoinColumn(name = "vendor_id", nullable = false)
-    private TicketSystem vendorId;
+    private TicketSystem vendor;
 
     @ManyToOne
     @JoinColumn(name = "card_id", nullable = false)
@@ -31,7 +31,7 @@ public class Subscription {
     public Subscription() {
     }
 
-    public Subscription(LocalDate startDate, TypeSubscription type, TicketSystem vendorId, Card card) {
+    public Subscription(LocalDate startDate, TypeSubscription type, TicketSystem vendor, Card card) {
         this.startDate = startDate;
         if (type == TypeSubscription.MONTHLY) {
             this.endDate = this.startDate.plusMonths(1);
@@ -39,7 +39,7 @@ public class Subscription {
             this.endDate = this.startDate.plusWeeks(1);
         }
         this.type = type;
-        this.vendorId = vendorId;
+        this.vendor = vendor;
         this.card = card;
     }
 
@@ -72,8 +72,12 @@ public class Subscription {
         this.type = type;
     }
 
-    public TicketSystem getVendorId() {
-        return vendorId;
+    public TicketSystem getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(TicketSystem vendor) {
+        this.vendor = vendor;
     }
 
     public Card getCard() {
@@ -83,4 +87,6 @@ public class Subscription {
     public void setCard(Card card) {
         this.card = card;
     }
+
+    
 }

@@ -12,10 +12,14 @@ public class VehicleDAO {
     }
 
     public void save(Vehicle newVehicle) {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(newVehicle);
-        transaction.commit();
-        System.out.println("Il veicolo " + newVehicle.getNumberPlate() + " è stato creato correttamente!");
+        try {
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.persist(newVehicle);
+            transaction.commit();
+            System.out.println("Il veicolo " + newVehicle.getNumberPlate() + " è stato creato correttamente!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
