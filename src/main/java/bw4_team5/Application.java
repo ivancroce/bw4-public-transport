@@ -37,9 +37,9 @@ public class Application {
 
         // ud.save(mario);
 
-        User marioFromDb = ud.findUserById(302);
+        //User marioFromDb = ud.findUserById(302);
 
-        Card mariosCard = new Card(marioFromDb);
+        //Card mariosCard = new Card(marioFromDb);
         // cd.save(mariosCard);
 
         Card mariosCardFromDb = cd.findCardById(2);
