@@ -1,5 +1,6 @@
 package bw4_team5.entities;
 
+import bw4_team5.enums.ServiceVehicleStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 public class TravelRoute {
     @Id
     @GeneratedValue
-    @Column(name= "travel_route_id")
+    @Column(name = "travel_route_id")
     private long id;
     @Column(name = "actual_travel_time")
     private int actualTraveTime;
@@ -27,11 +28,15 @@ public class TravelRoute {
     public TravelRoute() {
     }
 
-    public TravelRoute(long id, int actualTraveTime, LocalDate travelDate, Vehicle vehicle) {
-        this.id = id;
-        this.actualTraveTime = actualTraveTime;
-        this.travelDate = travelDate;
+    // to continue
+    public TravelRoute(Vehicle vehicle, Route route) {
+        if (vehicle.getStatus() != ServiceVehicleStatus.IN_SERVICE) {
+            throw new IllegalArgumentException("The vehicle is not in service.");
+        }
         this.vehicle = vehicle;
+        this.route = route;
+        this.travelDate = LocalDate.now();
+        this.actualTraveTime = 0;
     }
 
     @Override

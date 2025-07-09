@@ -25,6 +25,7 @@ public class Application {
         VehicleDAO vd = new VehicleDAO(em);
         SubscriptionDAO sd = new SubscriptionDAO(em);
         CardDAO cd = new CardDAO(em);
+        RouteDAO rd = new RouteDAO(em);
 
         //CREATION RECORD TICKETSYSTEM
         AuthorizedReseller reseller1 = new AuthorizedReseller("FrancoSrl", "Roma");
@@ -80,17 +81,16 @@ public class Application {
         vd.save(tram2);
         vd.save(tram3);*/
 
-        //CREATION RECORD ROUTES
+        // Save routes
+        Route romeRoute = new Route("Rome Street", "Rome station", 120);
+        Route milanRoute = new Route("Milan Street", "Milan station", 45);
+        Route naplesRoute = new Route("Naples Street", "Naples station", 20);
+        /* rd.save(romeRoute);
+        rd.save(milanRoute);
+        rd.save(naplesRoute); */
 
-//        List<TravelRoute> travelRoutesBus1 = new ArrayList<>();
-//
-//        TravelRoute firstRouteBus1 = new TravelRoute(1, 200, LocalDate.of(2025,7,8),bus1 );
-//
-//        travelRoutesBus1.add(firstRouteBus1);
-//        travelRoutesBus1.add
-//
-//        Route route1 = new Route(1, "Bari","Roma", 300, travelRoutesBus1);
-
+        // Save Travel Routes
+        // to continue
 
         em.close();
         emf.close();
