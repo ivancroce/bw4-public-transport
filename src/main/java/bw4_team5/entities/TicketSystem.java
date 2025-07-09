@@ -7,24 +7,27 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED )
-@Table(name = "tickets_system")
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "tickets_systems")
 public abstract class TicketSystem {
     @Id
     @GeneratedValue
     protected UUID uuid;
+    @Column(nullable = false)
     protected String name;
+    @Column(nullable = false)
     protected String location;
 
     @OneToMany(mappedBy = "vendorId")
-    private List <Ticket> ticketList= new ArrayList<>();
+    private List<Ticket> ticketList = new ArrayList<>();
 
     @OneToMany(mappedBy = "vendorId")
-    private List<Subscription> subscriptionList= new ArrayList<>();
+    private List<Subscription> subscriptionList = new ArrayList<>();
 
-    public TicketSystem(){}
+    public TicketSystem() {
+    }
 
-    public TicketSystem(String name,String location){
+    public TicketSystem(String name, String location) {
         this.name = name;
         this.location = location;
     }

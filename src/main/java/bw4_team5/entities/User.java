@@ -9,6 +9,7 @@ public class User {
     @Id
     @GeneratedValue
     protected long id;
+    @Column(name = "first_name")
     protected String firstName;
     protected String lastName;
     @OneToOne(mappedBy = "user")

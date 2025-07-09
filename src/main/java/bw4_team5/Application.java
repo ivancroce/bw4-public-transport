@@ -2,7 +2,10 @@ package bw4_team5;
 
 import bw4_team5.dao.*;
 import bw4_team5.entities.*;
-import bw4_team5.enums.*;
+import bw4_team5.enums.ServiceVehicleStatus;
+import bw4_team5.enums.ServiceVendingStatus;
+import bw4_team5.enums.TypeSubscription;
+import bw4_team5.enums.UserType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -47,13 +50,13 @@ public class Application {
         // System.out.println("Subscription saved for " + mario.getFirstName());
 
         // ------- END TEST -------
-        
+
         //CREATION RECORD TICKETS
-        Ticket ticket1 = new Ticket(LocalDate.of(2025, 7, 8), TicketStatus.NOT_ENDORSED);
+        /* Ticket ticket1 = new Ticket(LocalDate.of(2025, 7, 8), TicketStatus.NOT_ENDORSED);
         Ticket ticket3 = new Ticket(LocalDate.of(2025, 5, 7), TicketStatus.ENDORSED);
         Ticket ticket4 = new Ticket(LocalDate.of(2023, 4, 6), TicketStatus.NOT_ENDORSED);
         Ticket ticket5 = new Ticket(LocalDate.of(2025, 2, 5), TicketStatus.ENDORSED);
-        Ticket ticket2 = new Ticket(LocalDate.of(2022, 3, 4), TicketStatus.NOT_ENDORSED);
+        Ticket ticket2 = new Ticket(LocalDate.of(2022, 3, 4), TicketStatus.NOT_ENDORSED); */
 
         //CREATION RECORD USERS
         User admin1 = new User("Mirco", "l'amministratore", UserType.ADMIN);

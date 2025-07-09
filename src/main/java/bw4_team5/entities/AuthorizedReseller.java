@@ -1,28 +1,25 @@
 package bw4_team5.entities;
 
-import jakarta.persistence.*;
-
-import java.util.UUID;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "authorized_reseller")
-public class AuthorizedReseller extends TicketSystem{
-    @Id
-    @GeneratedValue
-    private UUID uuid;
+@Table(name = "authorized_resellers")
+public class AuthorizedReseller extends TicketSystem {
 
-    public AuthorizedReseller(){}
+    public AuthorizedReseller() {
+    }
 
-    public AuthorizedReseller(String name,String location){
-        super(name,location);
+    public AuthorizedReseller(String name, String location) {
+        super(name, location);
     }
 
     @Override
     public String toString() {
         return "AuthorizedReseller{" +
-                "name='" + name + '\'' +
-                ", uuid=" + uuid +
+                "uuid=" + uuid +
+                ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

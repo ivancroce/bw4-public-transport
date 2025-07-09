@@ -12,6 +12,7 @@ public class Card {
     @Id
     @GeneratedValue
     private long id;
+    @Column(name = "issue_date")
     private LocalDate issueDate;
     private LocalDate expirationDate;
 
