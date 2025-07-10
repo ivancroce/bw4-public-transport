@@ -2,6 +2,7 @@ package bw4_team5.dao;
 
 import bw4_team5.entities.Subscription;
 import bw4_team5.exceptions.NotFoundException;
+import bw4_team5.exceptions.UuidNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Id;
@@ -27,9 +28,9 @@ public class SubscriptionDAO {
         }
     }
 
-    public Subscription findSubscriptionByUuid(UUID uuid) {
-        Subscription found = entityManager.find(Subscription.class, uuid);
-        if (found == null) throw new NotFoundException(uuid.getMostSignificantBits());
+    public Subscription findSubscriptionByUuid(String uuid) {
+        Subscription found = entityManager.find(Subscription.class, UUID.fromString(uuid));
+        if (found == null) throw new UuidNotFoundException(uuid);
         return found;
     }
 }

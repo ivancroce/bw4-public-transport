@@ -43,7 +43,7 @@ public class Subscription {
         this.card = card;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
