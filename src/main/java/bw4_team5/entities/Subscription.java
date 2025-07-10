@@ -47,7 +47,6 @@ public class Subscription {
         return id;
     }
 
-
     public LocalDate getStartDate() {
         return startDate;
     }

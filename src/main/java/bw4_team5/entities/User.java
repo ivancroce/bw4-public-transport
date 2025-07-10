@@ -3,6 +3,8 @@ package bw4_team5.entities;
 import bw4_team5.enums.UserType;
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -35,9 +37,7 @@ public class User {
         this.firstName = firstName;
     }
 
-    public long getId() {
-        return id;
-    }
+    public long getId() { return id;}
 
     public String getLastName() {
         return lastName;

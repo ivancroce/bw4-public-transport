@@ -22,4 +22,8 @@ public class VehicleDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    public Vehicle findById(long id) {
+        return entityManager.find(Vehicle.class, id);
+    }
 }

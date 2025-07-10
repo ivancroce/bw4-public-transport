@@ -24,6 +24,8 @@ public class Card {
     private User user;
 
     public Card() {
+        this.issueDate = LocalDate.now();
+        this.expirationDate = this.issueDate.plusYears(1);
     }
 
     public Card(User user) {
@@ -50,6 +52,24 @@ public class Card {
 
     public void setIssueDate(LocalDate issueDate) {
         this.issueDate = issueDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (this.issueDate == null) {
+            this.issueDate = LocalDate.now();
+        }
+        if (this.expirationDate == null && this.issueDate != null) {
+            this.expirationDate = this.issueDate.plusYears(1);
+        }
     }
 
     @Override

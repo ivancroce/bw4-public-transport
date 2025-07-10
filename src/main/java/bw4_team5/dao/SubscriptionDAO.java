@@ -4,6 +4,9 @@ import bw4_team5.entities.Subscription;
 import bw4_team5.exceptions.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Id;
+
+import java.util.UUID;
 
 public class SubscriptionDAO {
     private final EntityManager entityManager;
@@ -24,9 +27,9 @@ public class SubscriptionDAO {
         }
     }
 
-    public Subscription findSubscriptionById(long id) {
-        Subscription found = entityManager.find(Subscription.class, id);
-        if (found == null) throw new NotFoundException(id);
+    public Subscription findSubscriptionByUuid(UUID uuid) {
+        Subscription found = entityManager.find(Subscription.class, uuid);
+        if (found == null) throw new NotFoundException(uuid.getMostSignificantBits());
         return found;
     }
 }

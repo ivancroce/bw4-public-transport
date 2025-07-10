@@ -18,11 +18,11 @@ public class TicketDAO {
 
     public void save(Ticket newTicket) {
         try {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(newTicket);
-        transaction.commit();
-        System.out.println("Ticket con id '" + newTicket.getId() + "it was created successfully!");
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.persist(newTicket);
+            transaction.commit();
+            System.out.println("Ticket con id '" + newTicket.getId() + "' it was created successfully!");
         } catch (Exception exception){
             System.out.println(exception.getMessage());
         }
@@ -39,14 +39,14 @@ public class TicketDAO {
         transaction.begin();
         Ticket ticket = entityManager.find(Ticket.class, ticketUuid);
 
-        if (ticket == null) throw new UuidNotFoundException(ticketUuid.toString());
+        if (ticket == null) throw new UuidNotFoundException("Ticket con UUID " + ticketUuid + " non trovato.");
         if (ticket.getStatus() == TicketStatus.ENDORSED) {
-            throw new IllegalStateException("The ticket is not valid for validation.");
+            throw new IllegalStateException("Il biglietto è già stato vidimato.");
         }
-        ticket.setStatus(bw4_team5.enums.TicketStatus.ENDORSED);
+        ticket.setStatus(TicketStatus.ENDORSED);
         ticket.setVehicle(vehicle);
         entityManager.merge(ticket);
         transaction.commit();
-        System.out.println("Ticket " + ticketUuid + " stamped on the vehicle " + vehicle.getId());
+        System.out.println("Ticket " + ticketUuid + " vidimato sul veicolo " + vehicle.getId() + "Targa veicolo: " + vehicle.getNumberPlate());
     }
 }
