@@ -20,15 +20,18 @@ public class Route {
     private int estimatedTravelTime;
 
     @OneToMany(mappedBy = "route")
-    private List<TravelRoute> travelRoutes= new ArrayList<>();
+    private List<TravelRoute> travelRoutes = new ArrayList<>();
 
-    public Route(){}
+    public Route() {
+    }
 
-    public Route( String startRoute, String terminal, int estimatedTravelTime, List<TravelRoute> travelRoutes) {
+    public Route(String startRoute, String terminal, int estimatedTravelTime) {
+        if (estimatedTravelTime <= 0) {
+            throw new IllegalArgumentException("Estimated travel time must be a positive number.");
+        }
         this.startRoute = startRoute;
         this.terminal = terminal;
         this.estimatedTravelTime = estimatedTravelTime;
-        this.travelRoutes = travelRoutes;
     }
 
     public long getId() {
@@ -74,7 +77,6 @@ public class Route {
                 ", startRoute='" + startRoute + '\'' +
                 ", terminal='" + terminal + '\'' +
                 ", estimatedTravelTime=" + estimatedTravelTime +
-                ", travelRoutes=" + travelRoutes +
                 '}';
     }
 }

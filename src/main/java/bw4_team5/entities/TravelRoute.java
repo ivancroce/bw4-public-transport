@@ -1,5 +1,6 @@
 package bw4_team5.entities;
 
+import bw4_team5.enums.ServiceVehicleStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -9,10 +10,10 @@ import java.time.LocalDate;
 public class TravelRoute {
     @Id
     @GeneratedValue
-    @Column(name= "travel_route_id")
+    @Column(name = "travel_route_id")
     private long id;
     @Column(name = "actual_travel_time")
-    private int actualTraveTime;
+    private Integer actualTravelTime;
     @Column(name = "travel_date")
     private LocalDate travelDate;
 
@@ -27,20 +28,15 @@ public class TravelRoute {
     public TravelRoute() {
     }
 
-    public TravelRoute( int actualTraveTime, LocalDate travelDate, Vehicle vehicle) {
-        this.actualTraveTime = actualTraveTime;
-        this.travelDate = travelDate;
+    // to continue
+    public TravelRoute(Vehicle vehicle, Route route) {
+        if (vehicle.getStatus() != ServiceVehicleStatus.IN_SERVICE) {
+            throw new IllegalArgumentException("The vehicle with ID '" + vehicle.getId() + "' is not in service.");
+        }
         this.vehicle = vehicle;
-    }
-
-    @Override
-    public String toString() {
-        return "TravelRoutes{" +
-                "id=" + id +
-                ", actualTraveTime=" + actualTraveTime +
-                ", travelDate=" + travelDate +
-                ", vehicle=" + vehicle +
-                '}';
+        this.route = route;
+        this.travelDate = LocalDate.now();
+        this.actualTravelTime = null;
     }
 
     public long getId() {
@@ -48,12 +44,23 @@ public class TravelRoute {
     }
 
 
-    public int getActualTraveTime() {
-        return actualTraveTime;
+    public int getActualTravelTime() {
+        return actualTravelTime;
     }
 
-    public void setActualTraveTime(int actualTraveTime) {
-        this.actualTraveTime = actualTraveTime;
+    public void setActualTravelTime(Integer actualTravelTime) {
+        if (actualTravelTime != null && actualTravelTime < 0) {
+            throw new IllegalArgumentException("The actual travel time can't be a negative value.");
+        }
+        this.actualTravelTime = actualTravelTime;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
 
     public LocalDate getTravelDate() {
@@ -70,5 +77,16 @@ public class TravelRoute {
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    @Override
+    public String toString() {
+        return "TravelRoute{" +
+                "id=" + id +
+                ", actualTraveTime=" + actualTravelTime +
+                ", travelDate=" + travelDate +
+                ", vehicle=" + vehicle +
+                ", route=" + route +
+                '}';
     }
 }

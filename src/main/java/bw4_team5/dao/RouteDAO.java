@@ -8,26 +8,25 @@ import jakarta.persistence.EntityTransaction;
 public class RouteDAO {
     private final EntityManager entityManager;
 
-    public RouteDAO(EntityManager entityManager){
+    public RouteDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    public void save(Route newRoute){
+    public void save(Route newRoute) {
         try {
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(newRoute);
-        transaction.commit();
-        System.out.println("Route from :"+ newRoute.getStartRoute() + "to : "+ newRoute.getTerminal()+" it was created successfully!");
-        } catch (Exception exception){
-            System.out.println(exception.getMessage());
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.persist(newRoute);
+            transaction.commit();
+            System.out.println("Route with ID '" + newRoute.getId() + "' has been successfully created!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    public Route findRouteById(long id){
-        Route found = entityManager.find(Route.class,id);
+    public Route findRouteById(long id) {
+        Route found = entityManager.find(Route.class, id);
         if (found == null) throw new NotFoundException(id);
         return found;
-
     }
 }

@@ -14,6 +14,7 @@ public class Card {
     private long id;
     @Column(name = "issue_date")
     private LocalDate issueDate;
+    @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
     @OneToMany(mappedBy = "card")
