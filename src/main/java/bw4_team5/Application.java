@@ -92,7 +92,7 @@ public class Application {
         ticketDAO.save(ticket);
 
         // Recupera bus2 dal database tramite id
-        Vehicle bus2FromDb = vd.findById(bus2.getId());
+        Vehicle bus2FromDb = vd.findBusById(bus2.getId());
 
         // --- Vidimazione del biglietto (associa un veicolo) ---
         ticketDAO.endorseTicket(ticket.getId(), bus2FromDb);
