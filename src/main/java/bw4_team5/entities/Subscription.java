@@ -12,16 +12,16 @@ public class Subscription {
     @Id
     @GeneratedValue
     private UUID id;
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date")
     private LocalDate startDate;
-    @Column(name = "end_date", nullable = false)
+    @Column(name = "end_date")
     private LocalDate endDate;
-    @Column(nullable = false)
+    @Column
     @Enumerated(EnumType.STRING)
     private TypeSubscription type;
 
     @ManyToOne
-    @JoinColumn(name = "vendor_id", nullable = false)
+    @JoinColumn(name = "vendor_id")
     private TicketSystem vendor;
 
     @ManyToOne
@@ -40,6 +40,10 @@ public class Subscription {
         }
         this.type = type;
         this.vendor = vendor;
+        this.card = card;
+    }
+
+    public Subscription(Card card){
         this.card = card;
     }
 

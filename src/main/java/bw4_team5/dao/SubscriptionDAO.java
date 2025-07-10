@@ -1,6 +1,7 @@
 package bw4_team5.dao;
 
 import bw4_team5.entities.Subscription;
+import bw4_team5.entities.Ticket;
 import bw4_team5.entities.TicketSystem;
 import bw4_team5.enums.TypeSubscription;
 import bw4_team5.exceptions.NotFoundException;
@@ -72,5 +73,17 @@ public class SubscriptionDAO {
         query2.executeUpdate();
         transaction.commit();
         System.out.println("Abbonamento aggiunto con successo");
+    }
+
+    public void setSubscriptionVendorIdFromVendorUuid(UUID uuid, UUID vendorId){
+        EntityTransaction transaction=entityManager.getTransaction();
+        transaction.begin();
+
+        Subscription subscription = entityManager.find(Subscription.class, uuid);
+        TicketSystem vendor = entityManager.createQuery("SELECT v FROM TicketSystem v WHERE v.uuid = :uuid", TicketSystem.class)
+                        .setParameter("uuid", vendorId).getSingleResult();
+        subscription.setVendor(vendor);
+        transaction.commit();
+        System.out.println("Id venditore inserito ");
     }
 }

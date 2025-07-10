@@ -29,8 +29,7 @@ public class VendingMachine extends TicketSystem {
 
     @Override
     public String toString() {
-        return "VendingMachine{" +
-                "status=" + status +
-                '}';
+        return "VendingMachine " + name + " " + location +
+                " status=" + status ;
     }
 }

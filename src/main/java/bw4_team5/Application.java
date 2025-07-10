@@ -8,7 +8,10 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("bw4_public_transport_pu");
@@ -31,6 +34,13 @@ public class Application {
         VendingMachine machine2 = new VendingMachine("GiovanniMachine", "Torino", ServiceVendingStatus.ACTIVE);
         VendingMachine machine3 = new VendingMachine("LucaMachine", "Napoli", ServiceVendingStatus.NOT_ACTIVE);
 
+        List<TicketSystem> machines = new ArrayList<>();
+        List<TicketSystem> resellers = new ArrayList<>();
+        machines.add(machine1);
+        machines.add(machine2);
+        machines.add(machine3);
+        resellers.add(reseller1);
+
 
         // Salva i TicketSystem nel database
 //        tsd.save(reseller1);
@@ -46,8 +56,10 @@ public class Application {
 //        ud.save(mario);
         User pino = new User("Pino", "Lalavatrice", UserType.CUSTOMER);
         User aldo = new User("Aldo", "Baglio", UserType.CUSTOMER);
+        User provino = new User("Provino", "Provetto", UserType.CUSTOMER);
 //        ud.save(pino);
 //        ud.save(aldo);
+     //   ud.save(provino);
 
         User marioFromDb = ud.findUserById(352); // Inserire l'id corretto dell'utente dal DB
 //        System.out.println("User retrieved: " + marioFromDb + " with ID: " + marioFromDb.getId());
@@ -55,17 +67,21 @@ public class Application {
 //        System.out.println("User retrieved: " + pinoFromDb + " with ID: " + pinoFromDb.getId());
         User aldoFromDb = ud.findUserById(354); // Inserire l'id corretto dell'utente dal DB
 //        System.out.println("User retrieved: " + pinoFromDb + " with ID: " + aldoFromDb.getId());
+        User provinoFromDb = ud.findUserById(402);
 
         // Creazione della Card per l'utente Mario
        Card mariosCard = new Card(marioFromDb);
 //        cd.save(mariosCard);
         Card pinosCard = new Card(pinoFromDb);
 //        cd.save(pinosCard);
+        Card provinosCard= new Card(provinoFromDb);
+       // cd.save(provinosCard);
 
         // Associa la Card all'utente Mario e salva l'utente aggiornato
 
             Card mariosCardFromDb = cd.findCardById(52);
             Card pinosCardFromDb = cd.findCardById(53);
+            Card provinosCardFromDb = cd.findCardById(102);
 
         //System.out.println("Card retrieved: " + mariosCardFromDb + " with ID: " + mariosCardFromDb.getId());
 
@@ -75,10 +91,12 @@ public class Application {
         TicketSystem machine3FromDb = tsd.findTicketSystemByUuid("c84ee2e0-1262-40fc-867c-5354615fa711");
         Subscription mariosSub = new Subscription(LocalDate.of(2025, 6, 12), TypeSubscription.MONTHLY, machine1FromDb, mariosCardFromDb);
         Subscription pinosSub = new Subscription(LocalDate.of(2025, 5, 12 ), TypeSubscription.MONTHLY, machine3FromDb, pinosCardFromDb);
+        Subscription provinoSub = new Subscription(provinosCardFromDb);
 
 //        sd.save(mariosSub);
 //        sd.save(pinosSub);
 //        sd.save(mariosSub);
+     //   sd.save(provinoSub);
         //System.out.println("Subscription saved for " + mario.getFirstName());
         // Recupera la Subscription dal database
         //Subscription mariosSubFromDb = sd.findSubscriptionByUuid(mariosSub.getId());
@@ -145,13 +163,53 @@ public class Application {
                     System.out.println("Desideri acquistare il biglietto da una macchinetta automatica o da un rivenditore autorizzato?");
                     System.out.println("Inserisci 1 per acqusitare da una macchinetta automatica");
                     System.out.println("Inserisci 2 per acquistare da un rivenditore autorizzato");
+                    n = Integer.parseInt(scanner.nextLine());
+                            //lista rivenditori switch 1/2
+                    switch (n) {
+                        case 1:
+                            System.out.println("Inserisci il numero corrispondente alla macchinetta che si desidera utilizzare : ");
+                            for (int i = 0; i < machines.toArray().length; i++) {
+                                System.out.println((i + 1) + " --- " + machines.get(i));
+                            }
+                            int j = Integer.parseInt(scanner.nextLine());
+                            switch (j) {
+                                case 1:
+                                    break;
+                                case 2:
+                                    System.out.println("sojwfjsdjoj");
+                                    break;
+                                case 3:
+                                    System.out.println("prova");
+                                    break;
 
-                    //lista rivenditori switch 1/2
+                            }
+                            break;
+                        case 2:
+                            System.out.println("Inserisci il numero corrispondente al rivenditore che si desidera utilizzare : ");
+                            for (int i = 0; i < resellers.toArray().length; i++) {
+                                System.out.println((i + 1) + " --- " + resellers.get(i));
+                            }
+                            j = Integer.parseInt(scanner.nextLine());
+                            switch (j) {
+                                case 1:
+                                    break;
+                                case 2:
+                                    System.out.println("psadsadsadsad");
+                                    break;
+                                case 3:
+                                    System.out.println("prova");
+                                    break;
+
+                            }
+                    }
+
+
+
 
                     //SetIdFromVendor/Machine
                     //switch
 
-                    n = Integer.parseInt(scanner.nextLine());
+
                     if (n <= 0 || n > 2) {
                         System.out.println("Inserisci nuovamente il numero");
                     }
@@ -169,53 +227,106 @@ public class Application {
                 //VIDIMAZIONE. UPDATE NOT TO ENDORSED
 
             } else {
+                UUID vendorSave=null;
                 do {
-                    System.out.println("Desideri acquistare il biglietto da una macchinetta automatica o da un rivenditore autorizzato?");
+                    System.out.println("Desideri acquistare l'abbonamento da una macchinetta automatica o da un rivenditore autorizzato?");
+                    System.out.println("--------------------------------------------------------------");
                     System.out.println("Inserisci 1 per acqusitare da una macchinetta automatica");
                     System.out.println("Inserisci 2 per acquistare da un rivenditore autorizzato");
-
+                    System.out.println("---------------------------------------------------------------");
+                    n = Integer.parseInt(scanner.nextLine());
                     //lista rivenditori switch 1/2
+                    switch (n) {
+                        case 1:
+                            System.out.println("Inserisci il numero corrispondente alla macchinetta che si desidera utilizzare : ");
+                            for (int i = 0; i < machines.toArray().length; i++) {
+                                System.out.println((i + 1) + " --- " + machines.get(i) + machines.get(i).getUuid());
+
+                            }
+                            int j = Integer.parseInt(scanner.nextLine());
+                            switch (j) {
+                                case 1:
+                                    vendorSave = machine1FromDb.getUuid();
+                                    break;
+                                case 2:
+                                    vendorSave = machine3FromDb.getUuid();
+                                    break;
+                                case 3:
+
+                                    break;
+
+                            }
+                            break;
+                        case 2:
+                            System.out.println("Inserisci il numero corrispondente al rivenditore che si desidera utilizzare : ");
+                            for (int i = 0; i < resellers.toArray().length; i++) {
+                                System.out.println((i + 1) + " --- " + resellers.get(i));
+                            }
+                            j = Integer.parseInt(scanner.nextLine());
+                            switch (j) {
+                                case 1:
+
+                                    break;
+                                case 2:
+                                    System.out.println("psadsadsadsad");
+                                    break;
+                                case 3:
+                                    System.out.println("prova");
+                                    break;
+
+                            }
+
+
+                    }
+
 
                     //SetIdFromVendor/Machine
                     //switch
 
-                    n = Integer.parseInt(scanner.nextLine());
+
                     if (n <= 0 || n > 2) {
                         System.out.println("Inserisci nuovamente il numero");
                     }
                 } while (n <= 0 || n > 2);
 
                 //controllo numero carta, checkCardByID
+                if(vendorSave==null){
+                    System.out.println("errore vendorsave");
+                }else{
+                    System.out.println(vendorSave);
+                }
                 System.out.println("Inserisci l'Id della tua Tessera");
                 long inputCard = scanner.nextLong();
                 cd.findCardById(inputCard);
                 scanner.nextLine();
-                System.out.println("Nome utente -> " );/*+ ud.findUserByCardId(inputCard).getFirstName())*/;
-                System.out.println("Congome utente -> ");/* + ud.findUserByCardId(inputCard).getLastName())*/;
-                System.out.println("Id tessera -> " );/*+ ud.findUserByCardId(inputCard).getId())*/;
+                System.out.println("Nome utente -> " + ud.findUserByCardId(inputCard).getFirstName());
+                System.out.println("Congome utente -> " + ud.findUserByCardId(inputCard).getLastName());
+                System.out.println("User ID -> " + ud.findUserByCardId(inputCard).getId());
                 //checkExpirationById(inputCard);
                 // se la carta è scaduta va rinnovata
                 Subscription personaProvaFromDb = sd.findSubscriptionByUuid(sd.findUuidByIdCard(inputCard));
+                sd.setSubscriptionVendorIdFromVendorUuid(personaProvaFromDb.getId(), vendorSave);
+
                 System.out.println("Vuoi sottoscrivere un abbonamento mensile o settimanale?");
                 System.out.println("Inserisci 'WEEKLY' o 'MONTHLY'");
 
-                String subTry = scanner.nextLine();
-                if(subTry.equals("WEEKLY")){
+                String subTry = scanner.nextLine().toUpperCase();
+                if (subTry.equals("WEEKLY")) {
 
                     LocalDate startDate = LocalDate.now();
-                    LocalDate endDate= startDate.plusWeeks(1);
+                    LocalDate endDate = startDate.plusWeeks(1);
 
                     personaProvaFromDb.setStartDate(startDate);
                     personaProvaFromDb.setType(TypeSubscription.WEEKLY);
                     sd.setSubscriptionType(TypeSubscription.WEEKLY, inputCard);
                     personaProvaFromDb.setEndDate(startDate.plusWeeks(1));
-                    sd.setSubscriptionDate(startDate,endDate, inputCard);
+                    sd.setSubscriptionDate(startDate, endDate, inputCard);
 
 
-                }else {
+                } else {
 
                     LocalDate startDate = LocalDate.now();
-                    LocalDate endDate= startDate.plusMonths(1);
+                    LocalDate endDate = startDate.plusMonths(1);
                     personaProvaFromDb.setStartDate(startDate);
                     personaProvaFromDb.setType(TypeSubscription.MONTHLY);
                     sd.setSubscriptionType(TypeSubscription.MONTHLY, inputCard);
