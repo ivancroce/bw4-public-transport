@@ -32,6 +32,16 @@ public class SubscriptionDAO {
         if (found == null) throw new UuidNotFoundException(uuid);
         return found;
     }
+    public String findUuidByIdCard(long id){
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Query query = entityManager.createQuery("SELECT s.id FROM Subscription s WHERE s.card.id = :card_id");
+        query.setParameter("card_id", id);
+        UUID result = (UUID) query.getSingleResult();
+
+        transaction.commit();
+        return result.toString();
+    }
 
     public void setSubscriptionType(TypeSubscription typeSubscription, long id){
         EntityTransaction transaction = entityManager.getTransaction();

@@ -84,7 +84,7 @@ public class Application {
 
 
         Route route1 = new Route(1, "Bari","Roma", 300);
-       
+
         //     Route route2 = new Route(1, "Napoli","Milano", 300, );
         //   Route route3 = new Route(1, "Venezia","Torino", 300,);
 
@@ -182,6 +182,7 @@ TravelRoute thirdRouteBus3 = new TravelRoute( 300, LocalDate.of(2025, 7,10 ),bus
                         System.out.println("Inserisci nuovamente il numero");
                     }
                 } while (n <= 0 || n > 2);
+
                 //controllo numero carta, checkCardByID
                 System.out.println("Inserisci l'Id della tua Tessera");
                 long inputCard = scanner.nextLong();
@@ -217,9 +218,11 @@ TravelRoute thirdRouteBus3 = new TravelRoute( 300, LocalDate.of(2025, 7,10 ),bus
                     sd.setSubscriptionType(TypeSubscription.MONTHLY, inputCard);
                     pinosSub.setEndDate(startDate.plusMonths(1));
                     sd.setSubscriptionDate(startDate, endDate, inputCard);
-                }
 
-                System.out.println(mariosSubFromDb.getType());
+                }
+                Subscription personaProvaFromDb = sd.findSubscriptionByUuid(sd.findUuidByIdCard(inputCard));
+
+                System.out.println(personaProvaFromDb.getType());
 
                 System.out.println("Il tuo abbonamento " + subTry + " è stato sottoscritto con successo");
 
