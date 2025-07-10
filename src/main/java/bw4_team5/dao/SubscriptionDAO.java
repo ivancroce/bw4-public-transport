@@ -1,13 +1,16 @@
 package bw4_team5.dao;
 
 import bw4_team5.entities.Subscription;
+import bw4_team5.entities.TicketSystem;
 import bw4_team5.enums.TypeSubscription;
 import bw4_team5.exceptions.NotFoundException;
+import bw4_team5.exceptions.UuidNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class SubscriptionDAO {
     private final EntityManager entityManager;
@@ -24,9 +27,9 @@ public class SubscriptionDAO {
         System.out.println("Subscription with ID '" + newSubscription.getId() + "' has been successfully created!");
     }
 
-    public Subscription findSubscriptionById(long id) {
-        Subscription found = entityManager.find(Subscription.class, id);
-        if (found == null) throw new NotFoundException(id);
+    public Subscription findSubscriptionByUuid(String uuid) {
+        Subscription found = entityManager.find(Subscription.class, UUID.fromString(uuid));
+        if (found == null) throw new UuidNotFoundException(uuid);
         return found;
     }
 

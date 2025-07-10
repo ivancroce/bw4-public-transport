@@ -24,12 +24,12 @@ public class Route {
 
     public Route(){}
 
-    public Route(long id, String startRoute, String terminal, int estimatedTravelTime, List<TravelRoute> travelRoutes) {
+    public Route(long id, String startRoute, String terminal, int estimatedTravelTime) {
         this.id = id;
         this.startRoute = startRoute;
         this.terminal = terminal;
         this.estimatedTravelTime = estimatedTravelTime;
-        this.travelRoutes = travelRoutes;
+
     }
 
     public long getId() {

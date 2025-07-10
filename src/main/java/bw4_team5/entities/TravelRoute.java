@@ -27,8 +27,7 @@ public class TravelRoute {
     public TravelRoute() {
     }
 
-    public TravelRoute(long id, int actualTraveTime, LocalDate travelDate, Vehicle vehicle) {
-        this.id = id;
+    public TravelRoute(int actualTraveTime, LocalDate travelDate, Vehicle vehicle) {
         this.actualTraveTime = actualTraveTime;
         this.travelDate = travelDate;
         this.vehicle = vehicle;

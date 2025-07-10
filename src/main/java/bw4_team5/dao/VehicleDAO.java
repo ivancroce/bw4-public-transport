@@ -1,8 +1,15 @@
 package bw4_team5.dao;
 
+import bw4_team5.entities.Bus;
+import bw4_team5.entities.Subscription;
+import bw4_team5.entities.Tram;
 import bw4_team5.entities.Vehicle;
+import bw4_team5.exceptions.NotFoundException;
+import bw4_team5.exceptions.UuidNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+
+import java.util.UUID;
 
 public class VehicleDAO {
     private final EntityManager entityManager;
@@ -22,4 +29,18 @@ public class VehicleDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    public Bus findBusById(long id) {
+        Bus found = entityManager.find(Bus.class, id);
+        if (found == null) throw new NotFoundException(id);
+        return found;
+    }
+
+    public Tram findTramById(long id) {
+        Tram found = entityManager.find(Tram.class, id);
+        if (found == null) throw new NotFoundException(id);
+        return found;
+    }
+
+
 }
