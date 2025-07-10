@@ -5,7 +5,10 @@ import bw4_team5.entities.VehicleStateLog;
 import bw4_team5.exceptions.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
+import java.time.LocalDate;
+import java.util.List;
 
 
 public class VehicleStateLogDAO {
@@ -32,4 +35,35 @@ public class VehicleStateLogDAO {
         if (found == null) throw new NotFoundException(id);
         return found;
     }
+
+    public List<VehicleStateLog> getAllLogs() {
+        TypedQuery<VehicleStateLog> query = entityManager.createQuery(
+                "SELECT vsl FROM VehicleStateLog vsl ORDER BY vsl.vehicle.id, vsl.startDate", VehicleStateLog.class);
+        return query.getResultList();
+    }
+
+    public List<VehicleStateLog> getLogsByVehicleId(long vehicleId) {
+        TypedQuery<VehicleStateLog> query = entityManager.createQuery(
+                        "SELECT vsl FROM VehicleStateLog vsl WHERE vsl.vehicle.id = :vehicleId", VehicleStateLog.class)
+                .setParameter("vehicleId", vehicleId);
+        return query.getResultList();
+    }
+
+    public List<VehicleStateLog> getLogsByDateRange(LocalDate from, LocalDate to) {
+        TypedQuery<VehicleStateLog> query = entityManager.createQuery(
+                        "SELECT vsl FROM VehicleStateLog vsl WHERE vsl.startDate >= :from AND vsl.endDate <= :to", VehicleStateLog.class)
+                .setParameter("from", from)
+                .setParameter("to", to);
+        return query.getResultList();
+    }
+
+    public List<VehicleStateLog> getLogsByVehicleAndDateRange(long vehicleId, LocalDate from, LocalDate to) {
+        TypedQuery<VehicleStateLog> query = entityManager.createQuery(
+                        "SELECT vsl FROM VehicleStateLog vsl WHERE vsl.vehicle.id = :vehicleId AND vsl.startDate >= :from AND vsl.endDate <= :to", VehicleStateLog.class)
+                .setParameter("vehicleId", vehicleId)
+                .setParameter("from", from)
+                .setParameter("to", to);
+        return query.getResultList();
+    }
+
 }
