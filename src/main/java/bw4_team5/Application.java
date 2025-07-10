@@ -91,24 +91,89 @@ public class Application {
         rd.save(naplesRoute); */
 
         // Test Save Travel Routes
-        Vehicle bus2FromDb = vd.findBusById(53);
-        Route romeRouteFromdb = rd.findRouteById(52);
-        TravelRoute travel1 = new TravelRoute(bus2FromDb, romeRouteFromdb);
-        // trd.save(travel1);
+        // Vehicles From DB
+        Vehicle bus2FromDb = vd.findVehicleById(53);
+        Vehicle bus3FromDb = vd.findVehicleById(54);
+        Vehicle tram3FromDb = vd.findVehicleById(57);
+
+        // Routes From DB
+        Route romeRouteFromDb = rd.findRouteById(52);
+        Route milanRouteFromDb = rd.findRouteById(53);
+        Route naplesRouteFromDb = rd.findRouteById(54);
+
+        // Save Travel Routes
+        TravelRoute travel1 = new TravelRoute(bus2FromDb, romeRouteFromDb);
+        TravelRoute travel2 = new TravelRoute(bus2FromDb, romeRouteFromDb);
+        TravelRoute travel3 = new TravelRoute(bus3FromDb, romeRouteFromDb);
+        TravelRoute travel4 = new TravelRoute(tram3FromDb, naplesRouteFromDb);
+        TravelRoute travel5 = new TravelRoute(tram3FromDb, milanRouteFromDb);
+        TravelRoute travel6 = new TravelRoute(tram3FromDb, milanRouteFromDb);
+        TravelRoute travel7 = new TravelRoute(tram3FromDb, milanRouteFromDb);
+
+       /* trd.save(travel1);
+        trd.save(travel2);
+        trd.save(travel3);
+        trd.save(travel4);
+        trd.save(travel5);
+        trd.save(travel6);
+        trd.save(travel7);*/
 
         // update the actualTravelTime if null
-        TravelRoute travel1FromDb = trd.findTravelRouteById(1);
-        try {
-            travel1FromDb.setActualTravelTime(90);
-            System.out.println("Travel route completed, actual travel time: " + travel1FromDb.getActualTravelTime() + " mins.");
-            // update in db
-            trd.updateActualTravelTime(travel1FromDb);
-            System.out.println("Travel route has been updated.");
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+   /*     updateTravelRoute(trd, 1, 90);
+        updateTravelRoute(trd, 2, 100);
+        updateTravelRoute(trd, 3, 95);
+        updateTravelRoute(trd, 4, 25);
+        updateTravelRoute(trd, 5, 50);
+        updateTravelRoute(trd, 52, 60);
+        updateTravelRoute(trd, 53, 60);*/
+
+
+        // Test Queries Travel Route
+        System.out.println("--- Test Count---");
+        // count
+        if (bus2FromDb != null && romeRouteFromDb != null) {
+            long count1 = trd.countTravelsByVehicleAndRoute(bus3FromDb.getId(), romeRouteFromDb.getId());
+
+            System.out.println("Vehicle: " + bus3FromDb.getClass().getSimpleName() + " (ID: " + bus3FromDb.getId() + ")");
+            System.out.println("Route: '" + romeRouteFromDb.getStartRoute() + " -> " + romeRouteFromDb.getTerminal() + "'");
+            System.out.println("Result: " + count1 + " travel route found.");
+        } else {
+            System.out.println("Error: bus3FromDb o romeRouteFromDb are null.");
+        }
+
+        System.out.println("--- Test Avg time ---");
+        // avg time
+        if (tram3FromDb != null && milanRouteFromDb != null) {
+            Double avg1 = trd.avgTimeByVehicleAndRoute(tram3FromDb.getId(), milanRouteFromDb.getId());
+
+            System.out.println("Vehicle: " + tram3FromDb.getClass().getSimpleName() + " (ID: " + tram3FromDb.getId() + ")");
+            System.out.println("Route: '" + milanRouteFromDb.getStartRoute() + " -> " + milanRouteFromDb.getTerminal() + "'");
+
+            if (avg1 != null) {
+                System.out.println("The average travel time is " + String.format("%.2f", avg1) + " minutes.");
+            } else {
+                System.out.println("No travel route found to calculate the average time.");
+            }
+        } else {
+            System.out.println("Error: tram3FromDb o milanRouteFromDb are null.");
         }
 
         em.close();
         emf.close();
+    }
+
+
+    // updateTravelRoute method
+    private static void updateTravelRoute(TravelRouteDAO trd, long id, int time) {
+        TravelRoute travel = trd.findTravelRouteById(id);
+        try {
+            travel.setActualTravelTime(time);
+            System.out.println("Travel route completed, actual travel time: " + travel.getActualTravelTime() + " mins.");
+            // update in db
+            trd.updateActualTravelTime(travel); // update method from TravelRouteDAO
+            System.out.println("Travel route with ID '" + id + "' has been updated.");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }

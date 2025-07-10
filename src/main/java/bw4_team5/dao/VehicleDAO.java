@@ -1,7 +1,5 @@
 package bw4_team5.dao;
 
-import bw4_team5.entities.Bus;
-import bw4_team5.entities.Tram;
 import bw4_team5.entities.Vehicle;
 import bw4_team5.exceptions.NotFoundException;
 import jakarta.persistence.EntityManager;
@@ -26,14 +24,8 @@ public class VehicleDAO {
         }
     }
 
-    public Bus findBusById(long id) {
-        Bus found = entityManager.find(Bus.class, id);
-        if (found == null) throw new NotFoundException(id);
-        return found;
-    }
-
-    public Tram findTramById(long id) {
-        Tram found = entityManager.find(Tram.class, id);
+    public Vehicle findVehicleById(long id) {
+        Vehicle found = entityManager.find(Vehicle.class, id);
         if (found == null) throw new NotFoundException(id);
         return found;
     }
