@@ -282,7 +282,7 @@ public class Application {
                             int j = Integer.parseInt(scanner.nextLine());
                             switch (j) {
                                 case 1:
-                                    /*vendorSave = reseller1FromDb.getUuid();*/
+                                    vendorSave = reseller1FromDb.getUuid();
                                     break;
                                 case 2:
                                     /*vendorSave = reseller1FromDb.getUuid();*/
