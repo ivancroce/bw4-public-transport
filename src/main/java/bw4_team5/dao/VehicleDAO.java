@@ -38,4 +38,49 @@ public class VehicleDAO {
         return found;
     }
 
+    public Vehicle[] findAllBuses() {
+        Vehicle[] buses = entityManager.createQuery("SELECT b FROM Bus b", Vehicle.class).getResultList().toArray(new Vehicle[0]);
+        if (buses.length == 0) {
+            System.out.println("Nessun bus trovato.");
+        }
+        return buses;
+    }
+
+    public Vehicle[] findAllInServiceVehicles() {
+    Vehicle[] vehicles = entityManager.createQuery("SELECT v FROM Vehicle v WHERE v.status = 'IN_SERVICE'", Vehicle.class).getResultList().toArray(new Vehicle[0]);
+        if (vehicles.length == 0) {
+            System.out.println("Nessun veicolo in servizio trovato.");
+        }
+        return vehicles;
+    }
+
+    public Vehicle[] findAllMaintenanceVehicles() {
+    Vehicle[] vehicles = entityManager.createQuery("SELECT v FROM Vehicle v WHERE v.status = 'UNDER_MAINTENANCE'", Vehicle.class).getResultList().toArray(new Vehicle[0]);
+        if (vehicles.length == 0) {
+            System.out.println("Nessun veicolo in manutenzione trovato.");
+        }
+        return vehicles;
+    }
+
+    public Vehicle[] findAllNotInServiceVehicles() {
+    Vehicle[] vehicles = entityManager.createQuery("SELECT v FROM Vehicle v WHERE v.status = 'NOT_IN_SERVICE'", Vehicle.class).getResultList().toArray(new Vehicle[0]);
+        if (vehicles.length == 0) {
+            System.out.println("Nessun veicolo non in servizio trovato.");
+        }
+        return vehicles;
+    }
+
+    public Vehicle findVehicleById(long vehicleId) {
+    Vehicle found = entityManager.find(Vehicle.class, vehicleId);
+        if (found == null) throw new NotFoundException(vehicleId);
+        return found;
+    }
+
+    public Vehicle[] findAllTrams() {
+        Vehicle[] trams = entityManager.createQuery("SELECT t FROM Tram t", Vehicle.class).getResultList().toArray(new Vehicle[0]);
+        if (trams.length == 0) {
+            System.out.println("Nessun tram trovato.");
+        }
+        return trams;
+    }
 }

@@ -1,6 +1,7 @@
 package bw4_team5.dao;
 
 import bw4_team5.entities.TravelRoute;
+import bw4_team5.entities.Vehicle;
 import bw4_team5.exceptions.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -54,5 +55,26 @@ public class TravelRouteDAO {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public Iterable<? extends TravelRoute> findAllRoutes() {
+        try {
+            Query query = entityManager.createQuery("SELECT t FROM TravelRoute t", TravelRoute.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            System.out.println("Error retrieving travel routes: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Iterable<? extends TravelRoute> findRoutesByVehicle(Vehicle vehicle) {
+    try {
+        Query query = entityManager.createQuery("SELECT t FROM TravelRoute t WHERE t.vehicle = :vehicle", TravelRoute.class);
+        query.setParameter("vehicle", vehicle);
+        return query.getResultList();
+    } catch (Exception e) {
+        System.out.println("Error retrieving travel routes for vehicle: " + e.getMessage());
+    }
+        return null;
     }
 }

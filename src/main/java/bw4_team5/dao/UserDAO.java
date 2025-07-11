@@ -4,6 +4,7 @@ import bw4_team5.entities.User;
 import bw4_team5.exceptions.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
 public class UserDAO {
     private final EntityManager entityManager;
@@ -28,6 +29,14 @@ public class UserDAO {
         User found = entityManager.find(User.class, id);
         if (found == null) throw new NotFoundException(id);
         return found;
+    }
+
+    public User findUserByCardId(long id){
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u JOIN Card c ON c.user.id = u.id WHERE c.id = :cardId", User.class);
+        query.setParameter("cardId", id);
+        return query.getSingleResult();
+
+
     }
 
 }

@@ -49,4 +49,14 @@ public class TicketDAO {
         transaction.commit();
         System.out.println("Ticket " + ticketUuid + " vidimato sul veicolo " + vehicle.getId() + "Targa veicolo: " + vehicle.getNumberPlate());
     }
+
+    public Ticket[] findAllEndorsedTickets() {
+        Ticket[] tickets = entityManager.createQuery("SELECT t FROM Ticket t WHERE t.status = 'ENDORSED'", Ticket.class)
+                .getResultList()
+                .toArray(new Ticket[0]);
+        if (tickets.length == 0) {
+            System.out.println("Nessun biglietto vidimato trovato.");
+        }
+        return tickets;
+    }
 }

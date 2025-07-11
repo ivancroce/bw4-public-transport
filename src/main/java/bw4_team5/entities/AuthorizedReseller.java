@@ -16,10 +16,7 @@ public class AuthorizedReseller extends TicketSystem {
 
     @Override
     public String toString() {
-        return "AuthorizedReseller{" +
-                "uuid=" + uuid +
-                ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
-                "} " + super.toString();
+        return  name +
+                ", location= " + location ;
     }
 }

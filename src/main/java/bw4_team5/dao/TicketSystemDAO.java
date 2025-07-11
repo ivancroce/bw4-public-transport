@@ -66,4 +66,22 @@ public class TicketSystemDAO {
         if (found == null) throw new UuidNotFoundException(uuid);
         return found;
     }
+
+    public Iterable<? extends TicketSystem> findAllAuthorizedResellers() {
+        Iterable<TicketSystem> resellers = entityManager.createQuery("SELECT ts FROM TicketSystem ts WHERE ts.isAuthorized = true", TicketSystem.class)
+                .getResultList();
+        if (!resellers.iterator().hasNext()) {
+            System.out.println("Nessun rivenditore autorizzato trovato.");
+        }
+        return resellers;
+    }
+
+    public Iterable<? extends TicketSystem> findAllVendingMachines() {
+        Iterable<TicketSystem> vendingMachines = entityManager.createQuery("SELECT ts FROM TicketSystem ts WHERE ts.isVendingMachine = true", TicketSystem.class)
+                .getResultList();
+        if (!vendingMachines.iterator().hasNext()) {
+            System.out.println("Nessuna macchina automatica trovata.");
+        }
+        return vendingMachines;
+    }
 }

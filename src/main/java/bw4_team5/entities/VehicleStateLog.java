@@ -22,10 +22,11 @@ public class VehicleStateLog {
 
     public VehicleStateLog(){}
 
-    public VehicleStateLog(LocalDate startDate, String cause, LocalDate endDate) {
+    public VehicleStateLog(LocalDate startDate, String cause, LocalDate endDate, Vehicle vehicle) {
         this.startDate = startDate;
         this.cause = cause;
         this.endDate = endDate;
+        this.vehicle = vehicle;
     }
 
     public long getId() {
