@@ -12,9 +12,9 @@ public class Ticket {
     @Id
     @GeneratedValue
     private UUID id;
-    @Column(name = "issue_date", nullable = false)
+    @Column(name = "issue_date")
     private LocalDate issueDate;
-    @Column(nullable = false)
+    @Column
     @Enumerated(EnumType.STRING)
     private TicketStatus status;
 

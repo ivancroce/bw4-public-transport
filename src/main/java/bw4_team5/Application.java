@@ -6,12 +6,10 @@ import bw4_team5.enums.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+
+import java.util.*;
 
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("bw4_public_transport_pu");
@@ -54,9 +52,9 @@ public class Application {
 
         // Recupera machine1 dal database tramite il suo UUID
 
-        TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("52347748-e3ea-4b7c-a1f5-e6adf2a4853f");
+        TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("b647e367-8f59-4d1d-8897-1e93670104ae");
         TicketSystem machine2FromDb = tsd.findTicketSystemByUuid("9101d73c-8594-457d-9c06-b303c9fb1b21");
-        TicketSystem machine3FromDb = tsd.findTicketSystemByUuid("b647e367-8f59-4d1d-8897-1e93670104ae");
+        TicketSystem machine3FromDb = tsd.findTicketSystemByUuid("52347748-e3ea-4b7c-a1f5-e6adf2a4853f");
         TicketSystem reseller1FromDb = tsd.findTicketSystemByUuid("86d6108f-fbf8-4c2d-abaa-8df880fa5734");
 
         // ------- TEST ------- Create User, Card and Subscription
@@ -131,6 +129,14 @@ public class Application {
         Vehicle tram1FromDb = vd.findTramById(255);
         Vehicle tram2FromDb = vd.findTramById(256);
         Vehicle tram3FromDb = vd.findTramById(257);
+
+        List<Vehicle> vehicleList = new ArrayList<>();
+        vehicleList.add(bus1FromDb);
+        vehicleList.add(bus2FromDb);
+        vehicleList.add(bus3FromDb);
+        vehicleList.add(tram1FromDb);
+        vehicleList.add(tram2FromDb);
+        vehicleList.add(tram3FromDb);
 
 
         VehicleStateLog log1 = new VehicleStateLog(LocalDate.of(2025, 4, 19), "Tagliando e manutenzione ordinaria", LocalDate.of(2025, 4, 29), bus1FromDb);
@@ -207,6 +213,7 @@ public class Application {
 
 /*-----------------------------------------------------------------------------------------------------------------------------------SCANNER---------------------------------------*/
         Scanner scanner = new Scanner(System.in);
+        boolean back;
 
         int n = 0;
         do {
@@ -241,58 +248,103 @@ public class Application {
                     //lista rivenditori switch 1/2
                     switch (n) {
                         case 1:
-                            System.out.println("Inserisci il numero corrispondente alla macchinetta che si desidera utilizzare : ");
-                            for (int i = 0; i < machines.toArray().length; i++) {
-                                System.out.println((i + 1) + " --- " + machines.get(i));
-                            }
-                            int j = Integer.parseInt(scanner.nextLine());
-                            switch (j) {
-                                case 1:
-                                    break;
-                                case 2:
-                                    System.out.println("sojwfjsdjoj");
-                                    break;
-                                case 3:
-                                    System.out.println("prova");
-                                    break;
+                            do {
+                                System.out.println("Inserisci il numero corrispondente alla macchinetta che si desidera utilizzare : ");
+                                for (int i = 0; i < machines.toArray().length; i++) {
+                                    System.out.println((i + 1) + " --- " + machines.get(i));
+                                }System.out.println("");
+                                int k = Integer.parseInt(scanner.nextLine());
+                                back = false;
 
-                            }
+                                switch (k) {
+                                    case 1:
+                                        vendorSave = machine1FromDb.getUuid();
+                                        break;
+                                    case 2:
+                                        vendorSave = machine3FromDb.getUuid();
+                                        break;
+
+                                    case 3:
+                                        System.out.println("Macchinetta non attiva!");
+                                        System.out.println("Scegli una macchinetta attiva!");
+                                        back=true;
+                                        break;
+
+
+                                }
+                            }while(back);
                             break;
                         case 2:
                             System.out.println("Inserisci il numero corrispondente al rivenditore che si desidera utilizzare : ");
                             for (int i = 0; i < resellers.toArray().length; i++) {
                                 System.out.println((i + 1) + " --- " + resellers.get(i));
                             }
-                            j = Integer.parseInt(scanner.nextLine());
+                            int j = Integer.parseInt(scanner.nextLine());
                             switch (j) {
                                 case 1:
+                                    /*vendorSave = reseller1FromDb.getUuid();*/
                                     break;
                                 case 2:
-                                    System.out.println("psadsadsadsad");
+                                    /*vendorSave = reseller1FromDb.getUuid();*/
                                     break;
                                 case 3:
-                                    System.out.println("prova");
+                                   /* vendorSave = reseller1FromDb.getUuid();*/
                                     break;
 
                             }
                     }
-
-                    n = Integer.parseInt(scanner.nextLine());
                     if (n <= 0 || n > 2) {
                         System.out.println("Inserisci nuovamente il numero");
                     }
                 } while (n <= 0 || n > 2);
                 //CREAZIONE BIGLIETTO
 
-                //VIDIMAZIONE BIGLIETTO
+                Ticket newTicket = new Ticket();
+                ticketDAO.save(newTicket);
 
-                //FINDTICKETBYID
 
-                //SELEZIONE MEZZO SU CUI SI STA VIDIMANDO IL BIGLIETTO
-                //ID53 -> BUS -> TRATTA BARI/ROMA ES.
 
-                //FINDVEHICLEBYID
-                //VIDIMAZIONE. UPDATE NOT TO ENDORSED
+                Ticket newTicketFromDb= ticketDAO.findTicketByUuid(newTicket.getId());
+                newTicketFromDb.setIssueDate(LocalDate.now());
+                ticketDAO.setTicketDate(LocalDate.now(), newTicketFromDb.getId());
+
+                newTicketFromDb.setVendor(tsd.findTicketSystemByUuid(vendorSave.toString()));
+
+
+                ticketDAO.setTicketVendor(vendorSave, newTicketFromDb.getId());
+
+                System.out.println("Seleziona il mezzo : ");
+                System.out.println("Veicoli in servizio:");
+                int countVehicle=0;
+                for (Vehicle vehicle : vd.findAllInServiceVehicles()) {
+
+                    System.out.println(vehicle);
+
+                }
+                System.out.println("inserisci l'id del veicolo");
+                long idInserito= scanner.nextLong();
+                scanner.nextLine();
+                System.out.println("id inserito : " + idInserito);
+                Vehicle veicoloSelezionato = null;
+
+                int num = vehicleList.size();
+
+                for (int i=0; i<num; i++){
+
+                    if (vehicleList.get(i).getId() == idInserito){
+                        veicoloSelezionato = vehicleList.get(i);
+                    }
+
+                }
+                if(veicoloSelezionato !=null){
+                    ticketDAO.endorseTicket(newTicketFromDb.getId(), veicoloSelezionato);
+
+                    System.out.println("Veicolo associato con successo");
+
+                }else{
+                    System.out.println("veicolo non trovato");
+                }
+
 
             } else {
                 do {
@@ -304,40 +356,48 @@ public class Application {
                     //lista rivenditori switch 1/2
                     switch (n) {
                         case 1:
-                            System.out.println("Inserisci il numero corrispondente alla macchinetta che si desidera utilizzare : ");
-                            for (int i = 0; i < machines.toArray().length; i++) {
-                                System.out.println((i + 1) + " --- " + machines.get(i));
+                            do {
+                                System.out.println("Inserisci il numero corrispondente alla macchinetta che si desidera utilizzare : ");
+                                for (int i = 0; i < machines.toArray().length; i++) {
+                                    System.out.println((i + 1) + " --- " + machines.get(i));
+                                }System.out.println("");
+                                int k = Integer.parseInt(scanner.nextLine());
+                                back = false;
 
-                            }
-                            int j = Integer.parseInt(scanner.nextLine());
-                            switch (j) {
-                                case 1:
-                                    vendorSave = machine1FromDb.getUuid();
-                                    break;
-                                case 2:
-                                    vendorSave = machine3FromDb.getUuid();
-                                    break;
-                                case 3:
+                                switch (k) {
+                                    case 1:
+                                        vendorSave = machine1FromDb.getUuid();
+                                        break;
+                                    case 2:
+                                        vendorSave = machine3FromDb.getUuid();
+                                        break;
 
-                                    break;
+                                    case 3:
+                                        System.out.println("Macchinetta non attiva!");
+                                        System.out.println("Scegli una macchinetta attiva!");
+                                        back=true;
+                                        break;
 
-                            }
+
+                                }
+                            }while(back);
                             break;
                         case 2:
                             System.out.println("Inserisci il numero corrispondente al rivenditore che si desidera utilizzare : ");
                             for (int i = 0; i < resellers.toArray().length; i++) {
                                 System.out.println((i + 1) + " --- " + resellers.get(i));
                             }
-                            j = Integer.parseInt(scanner.nextLine());
+
+                            int j= Integer.parseInt(scanner.nextLine());
                             switch (j) {
                                 case 1:
-
+                                    vendorSave = reseller1FromDb.getUuid();
                                     break;
                                 case 2:
-                                    System.out.println("psadsadsadsad");
+                                    //   vendorSave = reseller2FromDb.getUuid();
                                     break;
                                 case 3:
-                                    System.out.println("prova");
+                                    //  vendorSave = reseller3FromDb.getUuid();
                                     break;
 
                             }
@@ -348,7 +408,6 @@ public class Application {
                     //SetIdFromVendor/Machine
                     //switch
 
-                    n = Integer.parseInt(scanner.nextLine());
                     if (n <= 0 || n > 2) {
                         System.out.println("Inserisci nuovamente il numero");
                     }
@@ -409,14 +468,15 @@ public class Application {
                 System.out.println("Benvenuto nel pannello di amministrazione");
                 System.out.println("Inserisci 1 per visualizzare i veicoli in servizio");
                 System.out.println("Inserisci 2 per visualizzare i veicoli in manutenzione");
-                System.out.println("Inserisci 3 per visualizzare le tratte percorribili");
+                System.out.println("Inserisci 3 per assegnare una tratta ad un veicolo");
                 System.out.println("Inserisci 4 per visualizzare i biglietti vidimati");
                 System.out.println("Inserisci 5 per visualizzare le tratte percorribili da un mezzo specifico");
                 System.out.println("Inserisci 6 per visualizzare le tratte percorribili da un mezzo specifico con il tempo medio di percorrenza");
                 System.out.println("Inserisci 7 per visualizzare lo storico manutenzione veicoli");
                 System.out.println("Inserisci 8 per visualizzare lo storico manutenzione per un determinato periodo");
-                System.out.println("Inserisci 9 per visualizzare i tram");
-                System.out.println("Inserisci 10 per visualizzare i bus");
+                System.out.println("Inserisci 9 per aggiungere un mezzo al parco mezzi");
+                System.out.println("Inserisci 10 per visualizzare tutti i veicoli ");
+                System.out.println("Inserisci 11 per visualizzare le tratte disponibili");
 
                 System.out.println("Inserisci 0 per uscire");
                 sceltaAdmin = Integer.parseInt(scanner.nextLine());
@@ -435,10 +495,33 @@ public class Application {
                         }
                         break;
                     case 3:
-                        System.out.println("Tratte percorribili:");
-                        for (TravelRoute route : trd.findAllRoutes()) {
-                            System.out.println(route);
+                        System.out.println("Asegna una tratta a un veicolo:");
+                        System.out.println("Veicoli disponibili IN_SERVIS:");
+                        for (Vehicle v : vd.findAllInServiceVehicles()) {
+                            System.out.println("ID: " + v.getId() + " - Targa: " + v.getNumberPlate());
                         }
+                        System.out.println("Inserisci l'ID del veicolo:");
+                        long vehicleId3 = Long.parseLong(scanner.nextLine());
+                        Vehicle vehicle3 = vd.findVehicleById(vehicleId3);
+                        if (vehicle3 == null) {
+                            System.out.println("Veicolo non trovato.");
+                            break;
+                        }
+                        System.out.println("Asegna una tratta al un veicolo:");
+                        System.out.println("Tratte disponibili:");
+                        for (Route route : rd.findAllRoutes()) {
+                            System.out.println("ID: " + route.getId() + " - Da " + route.getStartRoute() + " a " + route.getTerminal());
+                        }
+                        System.out.println("Inserisci l'ID della tratta:");
+                        long routeId3 = Long.parseLong(scanner.nextLine());
+                        Route route3 = rd.findRouteById(routeId3);
+                        if (route3 == null) {
+                            System.out.println("Tratta non trovata.");
+                            break;
+                        }
+                        TravelRoute travelRoute = new TravelRoute(vehicle3, route3);
+                        trd.save(travelRoute);
+                        System.out.println("Tratta assegnata con successo al veicolo " + vehicle3.getNumberPlate());
                         break;
                     case 4:
                         System.out.println("Biglietti vidimati:");
@@ -535,20 +618,59 @@ public class Application {
                         }
                         break;
                     case 9:
-                        System.out.println("Tram:");
-                        for (Vehicle v : vd.findAllTrams()) {
-                            System.out.println(v);
+                        System.out.println("Aggiungi un mezzo al parco mezzi :");
+                        System.out.println("Inserisci il tipo di veicolo (1 per Tram, 2 per Bus):");
+                        int tipoVeicolo = Integer.parseInt(scanner.nextLine());
+                        if (tipoVeicolo == 1) {
+                            System.out.println("Inserisci la targa del Tram:");
+                            String targaTram = scanner.nextLine();
+                            System.out.println("Inserisci l'anno di immatricolazione del Tram:");
+                            int annoTram = Integer.parseInt(scanner.nextLine());
+                            System.out.println("Inserisci lo stato del servizio del Tram (IN_SERVICE, MAINTENANCE):");
+                            ServiceVehicleStatus statoTram = ServiceVehicleStatus.valueOf(scanner.nextLine().toUpperCase());
+                            System.out.println("Inserisci la capacità del Tram:");
+                            int capacitaTram = Integer.parseInt(scanner.nextLine());
+                            Vehicle tram = new Tram(targaTram, annoTram, statoTram, capacitaTram);
+                            vd.save(tram);
+                        } else if (tipoVeicolo == 2) {
+                            System.out.println("Inserisci la targa del Bus:");
+                            String targaBus = scanner.nextLine();
+                            System.out.println("Inserisci l'anno di immatricolazione del Bus:");
+                            int annoBus = Integer.parseInt(scanner.nextLine());
+                            System.out.println("Inserisci lo stato del servizio del Bus (IN_SERVICE, MAINTENANCE):");
+                            ServiceVehicleStatus statoBus = ServiceVehicleStatus.valueOf(scanner.nextLine().toUpperCase());
+                            System.out.println("Inserisci la capacità del Bus:");
+                            int capacitaBus = Integer.parseInt(scanner.nextLine());
+                            Vehicle bus = new Bus(targaBus, annoBus, statoBus, capacitaBus);
+                            vd.save(bus);
+                        } else {
+                            System.out.println("Tipo di veicolo non valido.");
                         }
                         break;
                     case 10:
-                        System.out.println("Bus:");
-                        for (Vehicle v : vd.findAllBuses()) {
-                            System.out.println(v);
+                        System.out.println("Elenco dei veicoli presententi nel database:");
+                        for (Vehicle vehiclePark : vd.findAllVehicles()) {
+                            System.out.println(vehiclePark);
                         }
+                        break;
+                        case 11:
+                        System.out.println("Registrazione tempo effettivo di una tratta percorsa:");
+
+                            for (TravelRoute travelRoute1 : trd.findAllTravelRoutes()) {
+                                System.out.println(travelRoute1);
+                            }
+                        System.out.println("Inserisci l'ID della tratta da aggiornare:");
+                        long travelRouteId = Long.parseLong(scanner.nextLine());
+                        System.out.println("Inserisci il tempo effettivo di percorrenza in minuti:");
+                        int actualTime = Integer.parseInt(scanner.nextLine());
+                        updateTravelRoute(trd, travelRouteId, actualTime);
+                            for (TravelRoute travelRoute1 : trd.findAllTravelRoutes()) {
+                                System.out.println(travelRoute1);
+                            }
                         break;
                     case 0:
                         System.out.println("Uscita dal pannello amministratore.");
-                        break;
+
                     default:
                         System.out.println("Scelta non valida, riprova.");
                 }

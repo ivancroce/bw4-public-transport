@@ -8,6 +8,8 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
+import java.util.List;
+
 public class TravelRouteDAO {
     private final EntityManager entityManager;
 
@@ -58,7 +60,7 @@ public class TravelRouteDAO {
         }
     }
 
-    public Iterable<? extends TravelRoute> findAllRoutes() {
+    public List<TravelRoute> findAllTravelRoutes() {
         try {
             Query query = entityManager.createQuery("SELECT t FROM TravelRoute t", TravelRoute.class);
             return query.getResultList();

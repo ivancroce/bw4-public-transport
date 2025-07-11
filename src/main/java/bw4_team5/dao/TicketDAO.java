@@ -1,11 +1,14 @@
 package bw4_team5.dao;
 
 import bw4_team5.entities.Ticket;
+import bw4_team5.entities.TicketSystem;
 import bw4_team5.entities.Vehicle;
 import bw4_team5.enums.TicketStatus;
 import bw4_team5.exceptions.UuidNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
+
 import java.time.LocalDate;
 
 import java.util.UUID;
@@ -79,5 +82,38 @@ public class TicketDAO {
                 .getSingleResult();
 
 
+    }
+    public void setTicketDate(LocalDate date, UUID uuid) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Query query = entityManager.createQuery("UPDATE Ticket t SET t.issueDate = :issue_date WHERE t.id = :uuid");
+        query.setParameter("issue_date", date);
+        query.setParameter("uuid", uuid);
+        query.executeUpdate();
+        transaction.commit();
+        System.out.println("data salvata con successo");
+    }
+
+    public void setTicketVendor(UUID vendorUuid, UUID ticketUuid) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        TicketSystem vendor = entityManager.find(TicketSystem.class, vendorUuid);
+        Query query = entityManager.createQuery("UPDATE Ticket t SET t.vendor = :vendor WHERE t.id = :ticketId");
+        query.setParameter("vendor", vendor);
+        query.setParameter("ticketId", ticketUuid);
+        query.executeUpdate();
+        transaction.commit();
+        System.out.println("vendor salvato con successo");
+    }
+
+    public void setTicketVehicle(long vehicleId, UUID ticketUuid){
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Vehicle vehicle= entityManager.find(Vehicle.class, vehicleId);
+        Query query =entityManager.createQuery("UPDATE Ticket t SET t.vehicle = :vehicle WHERE t.id = :ticketId");
+        query.setParameter("vehicle", vehicle);
+        query.setParameter("ticketId", ticketUuid);
+        query.executeUpdate();
+        transaction.commit();
     }
 }

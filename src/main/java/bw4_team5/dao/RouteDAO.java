@@ -5,6 +5,8 @@ import bw4_team5.exceptions.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
+import java.util.List;
+
 public class RouteDAO {
     private final EntityManager entityManager;
 
@@ -28,5 +30,13 @@ public class RouteDAO {
         Route found = entityManager.find(Route.class, id);
         if (found == null) throw new NotFoundException(id);
         return found;
+    }
+
+    public List <Route> findAllRoutes() {
+        List<Route> routes = entityManager.createQuery("SELECT r FROM Route r", Route.class).getResultList();
+        if (routes.isEmpty()) {
+            System.out.println("No routes found.");
+        }
+        return routes;
     }
 }
