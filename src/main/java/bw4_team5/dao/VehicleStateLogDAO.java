@@ -37,33 +37,53 @@ public class VehicleStateLogDAO {
     }
 
     public List<VehicleStateLog> getAllLogs() {
+        try {
         TypedQuery<VehicleStateLog> query = entityManager.createQuery(
                 "SELECT vsl FROM VehicleStateLog vsl ORDER BY vsl.vehicle.id, vsl.startDate", VehicleStateLog.class);
         return query.getResultList();
+        } catch (Exception exception){
+            System.out.println("Errore nel caricamento dei dati quindi la lista è vuota!" + exception.getMessage());
+            return List.of();
+        }
     }
 
     public List<VehicleStateLog> getLogsByVehicleId(long vehicleId) {
+        try {
         TypedQuery<VehicleStateLog> query = entityManager.createQuery(
                         "SELECT vsl FROM VehicleStateLog vsl WHERE vsl.vehicle.id = :vehicleId", VehicleStateLog.class)
                 .setParameter("vehicleId", vehicleId);
         return query.getResultList();
+        } catch (Exception exception){
+            System.out.println("Errore nel caricamento dei dati quindi la lista è vuota!" + exception.getMessage());
+            return List.of();
+        }
     }
 
     public List<VehicleStateLog> getLogsByDateRange(LocalDate from, LocalDate to) {
+        try {
         TypedQuery<VehicleStateLog> query = entityManager.createQuery(
                         "SELECT vsl FROM VehicleStateLog vsl WHERE vsl.startDate >= :from AND vsl.endDate <= :to", VehicleStateLog.class)
                 .setParameter("from", from)
                 .setParameter("to", to);
         return query.getResultList();
+        } catch (Exception exception){
+        System.out.println("Errore nel caricamento dei dati quindi la lista è vuota!" + exception.getMessage());
+        return List.of();
+    }
     }
 
     public List<VehicleStateLog> getLogsByVehicleAndDateRange(long vehicleId, LocalDate from, LocalDate to) {
+        try {
         TypedQuery<VehicleStateLog> query = entityManager.createQuery(
                         "SELECT vsl FROM VehicleStateLog vsl WHERE vsl.vehicle.id = :vehicleId AND vsl.startDate >= :from AND vsl.endDate <= :to", VehicleStateLog.class)
                 .setParameter("vehicleId", vehicleId)
                 .setParameter("from", from)
                 .setParameter("to", to);
         return query.getResultList();
+        } catch (Exception exception){
+        System.out.println("Errore nel caricamento dei dati quindi la lista è vuota!" + exception.getMessage());
+        return List.of();
+    }
     }
 
 }

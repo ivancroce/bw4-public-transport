@@ -35,12 +35,12 @@ public class Application {
         Vehicle tram2 = new Tram("SS222RR", 2010, ServiceVehicleStatus.IN_SERVICE, 120);
         Vehicle tram3 = new Tram("GH333TT", 2015, ServiceVehicleStatus.IN_SERVICE, 140);
 
-        vd.save(bus1);
+        /*vd.save(bus1);
         vd.save(bus2);
         vd.save(bus3);
         vd.save(tram1);
         vd.save(tram2);
-        vd.save(tram3);
+        vd.save(tram3);*/
 
         VehicleStateLog log1 = new VehicleStateLog(LocalDate.of(2025,4,19),"Tagliando e manutenzione ordinaria",LocalDate.of(2025,4,29),bus1);
         VehicleStateLog log2 = new VehicleStateLog(LocalDate.of(2025,5,10),"Cambio motore e frizione",LocalDate.of(2025,6,15),bus2);
@@ -49,13 +49,42 @@ public class Application {
         VehicleStateLog log5 = new VehicleStateLog(LocalDate.of(2024,12,10),"Ristrutturazione sedili",LocalDate.of(2025,1,15),tram2);
         VehicleStateLog log6 = new VehicleStateLog(LocalDate.of(2025,2,17),"Controlli ordinari",LocalDate.of(2025,3,6),tram3);
 
-        vsld.save(log1);
+        /*vsld.save(log1);
         vsld.save(log2);
         vsld.save(log3);
         vsld.save(log4);
         vsld.save(log5);
-        vsld.save(log6);
+        vsld.save(log6);*/
 
+
+        vsld.getAllLogs().forEach(System.out::println);
+        Vehicle bus1FromDb = vd.findBusById(1);
+        Vehicle bus2FromDb = vd.findBusById(2);
+        Vehicle bus3FromDb = vd.findBusById(3);
+        Vehicle tram1FromDb = vd.findTramById(4);
+        Vehicle tram2FromDb = vd.findTramById(5);
+        Vehicle tram3FromDb = vd.findTramById(6);
+        System.out.println("-------------------------------");
+        System.out.println(vsld.getLogsByVehicleId(bus1FromDb.getId()));
+        System.out.println(vsld.getLogsByVehicleId(bus2FromDb.getId()));
+        System.out.println(vsld.getLogsByVehicleId(bus3FromDb.getId()));
+        System.out.println(vsld.getLogsByVehicleId(tram1FromDb.getId()));
+        System.out.println(vsld.getLogsByVehicleId(tram2FromDb.getId()));
+        System.out.println(vsld.getLogsByVehicleId(tram3FromDb.getId()));
+        System.out.println("-------------------------------");
+        System.out.println(vsld.getLogsByVehicleAndDateRange(bus1FromDb.getId(),LocalDate.of(2025,1,1),LocalDate.of(2025,6,30)));
+        System.out.println(vsld.getLogsByVehicleAndDateRange(bus2FromDb.getId(),LocalDate.of(2025,1,1),LocalDate.of(2025,6,30)));
+        System.out.println(vsld.getLogsByVehicleAndDateRange(bus3FromDb.getId(),LocalDate.of(2025,1,1),LocalDate.of(2025,6,30)));
+        System.out.println(vsld.getLogsByVehicleAndDateRange(tram1FromDb.getId(),LocalDate.of(2025,1,1),LocalDate.of(2025,6,30)));
+        System.out.println(vsld.getLogsByVehicleAndDateRange(tram2FromDb.getId(),LocalDate.of(2024,1,1),LocalDate.of(2025,6,30)));
+        System.out.println(vsld.getLogsByVehicleAndDateRange(tram3FromDb.getId(),LocalDate.of(2025,1,1),LocalDate.of(2025,6,30)));
+        System.out.println("-------------------------------");
+        System.out.println(vsld.getLogsByVehicleAndDateRange(bus1FromDb.getId(),LocalDate.of(2025,6,1),LocalDate.of(2025,12,30)));
+        System.out.println(vsld.getLogsByVehicleAndDateRange(bus2FromDb.getId(),LocalDate.of(2025,6,1),LocalDate.of(2025,12,30)));
+        System.out.println(vsld.getLogsByVehicleAndDateRange(bus3FromDb.getId(),LocalDate.of(2025,6,1),LocalDate.of(2025,12,30)));
+        System.out.println(vsld.getLogsByVehicleAndDateRange(tram1FromDb.getId(),LocalDate.of(2025,6,1),LocalDate.of(2025,12,30)));
+        System.out.println(vsld.getLogsByVehicleAndDateRange(tram2FromDb.getId(),LocalDate.of(2025,6,1),LocalDate.of(2025,12,30)));
+        System.out.println(vsld.getLogsByVehicleAndDateRange(tram3FromDb.getId(),LocalDate.of(2025,6,1),LocalDate.of(2025,12,30)));
 
         em.close();
         emf.close();
