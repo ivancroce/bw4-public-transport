@@ -6,6 +6,7 @@ import bw4_team5.enums.TicketStatus;
 import bw4_team5.exceptions.UuidNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import java.time.LocalDate;
 
 import java.util.UUID;
 
@@ -58,5 +59,25 @@ public class TicketDAO {
             System.out.println("Nessun biglietto vidimato trovato.");
         }
         return tickets;
+    }
+    // Conta biglietti vidimati su un veicolo specifico
+    public long countEndorsedTicketsByVehicle(long vehicleId) {
+        return entityManager.createQuery(
+                        "SELECT COUNT(t) FROM Ticket t WHERE t.status = :status AND t.vehicle.id = :vehicleId", Long.class)
+                .setParameter("status", TicketStatus.ENDORSED)
+                .setParameter("vehicleId", vehicleId)
+                .getSingleResult();
+    }
+
+    // Conta biglietti vidimati in un intervallo di tempo
+    public long countEndorsedTicketsByPeriod(LocalDate start, LocalDate end) {
+        return entityManager.createQuery(
+                        "SELECT COUNT(t) FROM Ticket t WHERE t.status = :status AND t.issueDate BETWEEN :start AND :end", Long.class)
+                .setParameter("status", TicketStatus.ENDORSED)
+                .setParameter("start", start)
+                .setParameter("end", end)
+                .getSingleResult();
+
+
     }
 }

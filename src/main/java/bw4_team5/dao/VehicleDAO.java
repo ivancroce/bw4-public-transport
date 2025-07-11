@@ -6,6 +6,8 @@ import bw4_team5.entities.Vehicle;
 import bw4_team5.exceptions.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import java.util.List;
+import java.util.ArrayList;
 
 public class VehicleDAO {
     private final EntityManager entityManager;
@@ -55,20 +57,13 @@ public class VehicleDAO {
     }
 
     public Vehicle[] findAllMaintenanceVehicles() {
-    Vehicle[] vehicles = entityManager.createQuery("SELECT v FROM Vehicle v WHERE v.status = 'UNDER_MAINTENANCE'", Vehicle.class).getResultList().toArray(new Vehicle[0]);
+    Vehicle[] vehicles = entityManager.createQuery("SELECT v FROM Vehicle v WHERE v.status = 'MAINTENANCE'", Vehicle.class).getResultList().toArray(new Vehicle[0]);
         if (vehicles.length == 0) {
             System.out.println("Nessun veicolo in manutenzione trovato.");
         }
         return vehicles;
     }
 
-    public Vehicle[] findAllNotInServiceVehicles() {
-    Vehicle[] vehicles = entityManager.createQuery("SELECT v FROM Vehicle v WHERE v.status = 'NOT_IN_SERVICE'", Vehicle.class).getResultList().toArray(new Vehicle[0]);
-        if (vehicles.length == 0) {
-            System.out.println("Nessun veicolo non in servizio trovato.");
-        }
-        return vehicles;
-    }
 
     public Vehicle findVehicleById(long vehicleId) {
     Vehicle found = entityManager.find(Vehicle.class, vehicleId);
@@ -82,5 +77,13 @@ public class VehicleDAO {
             System.out.println("Nessun tram trovato.");
         }
         return trams;
+    }
+    public List<Vehicle> findAllVehicles() {
+        try {
+            return entityManager.createQuery("SELECT v FROM Vehicle v", Vehicle.class).getResultList();
+        } catch (Exception e) {
+            System.out.println("Errore nel recupero dei veicoli: " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 }

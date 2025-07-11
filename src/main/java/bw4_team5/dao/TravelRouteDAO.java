@@ -92,11 +92,13 @@ public class TravelRouteDAO {
     // Average travel time.
     public Double avgTimeByVehicleAndRoute(long vehicleId, long routeId) {
         TypedQuery<Double> query = entityManager.createQuery(
-                "SELECT AVG(t.actualTravelTime) FROM TravelRoute t WHERE t.vehicle.id = :vId AND t.route.id = :rId AND t.actualTravelTime IS NOT NULL"
-                , Double.class);
+                "SELECT AVG(t.actualTravelTime) FROM TravelRoute t WHERE t.vehicle.id = :vId AND t.route.id = :rId AND t.actualTravelTime IS NOT NULL",
+                Double.class
+        );
         query.setParameter("vId", vehicleId);
         query.setParameter("rId", routeId);
-
         return query.getSingleResult();
     }
+
+
 }

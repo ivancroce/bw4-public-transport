@@ -28,6 +28,10 @@ public class Application {
         SubscriptionDAO sd = new SubscriptionDAO(em);
         CardDAO cd = new CardDAO(em);
         VehicleStateLogDAO vsld = new VehicleStateLogDAO(em);
+        TravelRouteDAO trd = new TravelRouteDAO(em);
+        RouteDAO rd = new RouteDAO(em);
+
+
 
         //CREATION RECORD TICKETSYSTEM
         AuthorizedReseller reseller1 = new AuthorizedReseller("FrancoSrl", "Roma");
@@ -50,9 +54,10 @@ public class Application {
 
         // Recupera machine1 dal database tramite il suo UUID
 
-       TicketSystem machine1FromDb =  tsd.findTicketSystemByUuid("52347748-e3ea-4b7c-a1f5-e6adf2a4853f");
-       TicketSystem machine2FromDb =  tsd.findTicketSystemByUuid("9101d73c-8594-457d-9c06-b303c9fb1b21");
-       TicketSystem machine3FromDb =  tsd.findTicketSystemByUuid("b647e367-8f59-4d1d-8897-1e93670104ae");
+        TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("52347748-e3ea-4b7c-a1f5-e6adf2a4853f");
+        TicketSystem machine2FromDb = tsd.findTicketSystemByUuid("9101d73c-8594-457d-9c06-b303c9fb1b21");
+        TicketSystem machine3FromDb = tsd.findTicketSystemByUuid("b647e367-8f59-4d1d-8897-1e93670104ae");
+        TicketSystem reseller1FromDb = tsd.findTicketSystemByUuid("86d6108f-fbf8-4c2d-abaa-8df880fa5734");
 
         // ------- TEST ------- Create User, Card and Subscription
         User mario = new User("Mario", "Balotelli", UserType.CUSTOMER);
@@ -96,7 +101,7 @@ public class Application {
         //System.out.println("Subscription saved for " + mario.getFirstName());
         // Recupera la Subscription dal database
         //Subscription mariosSubFromDb = sd.findSubscriptionByUuid(mariosSub.getId());
-      //  System.out.println("Subscription retrieved: " + mariosSubFromDb + " with ID: " + mariosSubFromDb.getId());
+        //  System.out.println("Subscription retrieved: " + mariosSubFromDb + " with ID: " + mariosSubFromDb.getId());
 
         // ------- END TEST -------
 
@@ -128,12 +133,12 @@ public class Application {
         Vehicle tram3FromDb = vd.findTramById(257);
 
 
-        VehicleStateLog log1 = new VehicleStateLog(LocalDate.of(2025,4,19),"Tagliando e manutenzione ordinaria",LocalDate.of(2025,4,29),bus1FromDb);
-        VehicleStateLog log2 = new VehicleStateLog(LocalDate.of(2025,5,10),"Cambio motore e frizione",LocalDate.of(2025,6,15),bus2FromDb);
-        VehicleStateLog log3 = new VehicleStateLog(LocalDate.of(2025,6,11),"Lavori di carrozzeria",LocalDate.of(2025,7,22),bus3FromDb);
-        VehicleStateLog log4 = new VehicleStateLog(LocalDate.of(2025,2,1),"Riparazione quadro elettrico",LocalDate.of(2025,2,24),tram1FromDb);
-        VehicleStateLog log5 = new VehicleStateLog(LocalDate.of(2024,12,10),"Ristrutturazione sedili",LocalDate.of(2025,1,15),tram2FromDb);
-        VehicleStateLog log6 = new VehicleStateLog(LocalDate.of(2025,2,17),"Controlli ordinari",LocalDate.of(2025,3,6),tram3FromDb);
+        VehicleStateLog log1 = new VehicleStateLog(LocalDate.of(2025, 4, 19), "Tagliando e manutenzione ordinaria", LocalDate.of(2025, 4, 29), bus1FromDb);
+        VehicleStateLog log2 = new VehicleStateLog(LocalDate.of(2025, 5, 10), "Cambio motore e frizione", LocalDate.of(2025, 6, 15), bus2FromDb);
+        VehicleStateLog log3 = new VehicleStateLog(LocalDate.of(2025, 6, 11), "Lavori di carrozzeria", LocalDate.of(2025, 7, 22), bus3FromDb);
+        VehicleStateLog log4 = new VehicleStateLog(LocalDate.of(2025, 2, 1), "Riparazione quadro elettrico", LocalDate.of(2025, 2, 24), tram1FromDb);
+        VehicleStateLog log5 = new VehicleStateLog(LocalDate.of(2024, 12, 10), "Ristrutturazione sedili", LocalDate.of(2025, 1, 15), tram2FromDb);
+        VehicleStateLog log6 = new VehicleStateLog(LocalDate.of(2025, 2, 17), "Controlli ordinari", LocalDate.of(2025, 3, 6), tram3FromDb);
 
       /*  vsld.save(log1);
         vsld.save(log2);
@@ -143,8 +148,13 @@ public class Application {
         vsld.save(log6);*/
 
 //        // Creazione e salvataggio di un biglietto con stato NOT_ENDORSED e vendor
-//        Ticket ticket = new Ticket(LocalDate.now(), TicketStatus.NOT_ENDORSED, machine1Vendor);
-//        ticketDAO.save(ticket);
+        Ticket ticket1 = new Ticket(LocalDate.now(), TicketStatus.NOT_ENDORSED, machine1FromDb);
+        Ticket ticket2 = new Ticket(LocalDate.now(), TicketStatus.NOT_ENDORSED, machine3FromDb);
+        Ticket ticket3 = new Ticket(LocalDate.now(), TicketStatus.NOT_ENDORSED, reseller1FromDb);
+
+         /*ticketDAO.save(ticket1);
+        ticketDAO.save(ticket2);
+        ticketDAO.save(ticket3);*/
 //
 //        // Recupera bus2 dal database tramite id
 //        Vehicle bus2FromDb = vd.findBusById(bus2.getId());
@@ -155,7 +165,47 @@ public class Application {
 //        // Stampa il biglietto vidimato
 //        Ticket endorsedTicket = ticketDAO.findTicketByUuid(ticket.getId());
 //        System.out.println("Biglietto vidimato: " + endorsedTicket);
+        // ----CREAZIONE DELLE ROTTE --
+        Route romeRoute = new Route("Via Roma", "Stazione Termini", 120);
+        Route milanRoute = new Route("Via Milano", "Piazza Duomo", 90);
+        Route naplesRoute = new Route("Via Napoli", "Piazza del Plebiscito", 150);
 
+        // Salva le rotte nel database
+        /*rd.save(romeRoute);
+        rd.save(milanRoute);
+        rd.save(naplesRoute);*/
+
+        // Recupera le rotte dal database tramite id
+        Route romeRouteFromDb = rd.findRouteById(52);
+        Route milanRouteFromDb = rd.findRouteById(53);
+        Route naplesRouteFromDb = rd.findRouteById(54);
+        // ----CREAZIONE DELLE TRATTE --
+        TravelRoute romeTravelRoute1 = new TravelRoute(bus3FromDb, romeRouteFromDb);
+        TravelRoute romeTravelRoute2 = new TravelRoute(bus3FromDb, romeRouteFromDb);
+        TravelRoute milanTravelRoute1 = new TravelRoute(bus2FromDb, milanRouteFromDb);
+        TravelRoute naplesTravelRoute1 = new TravelRoute(tram3FromDb, naplesRouteFromDb);
+        TravelRoute naplesTravelRoute2 = new TravelRoute(tram3FromDb, naplesRouteFromDb);
+
+        // Salva le tratte nel database
+        /*trd.save(romeTravelRoute1);
+        trd.save(romeTravelRoute2);
+        trd.save(milanTravelRoute1);
+        trd.save(naplesTravelRoute1);
+        trd.save(naplesTravelRoute2);
+*/
+
+        // ----CREAZIONE DELLE TRATTE CON TEMPO DI PERCORRENZA --
+
+        /*updateTravelRoute(trd, 2, 90); // Aggiorna il tempo di percorrenza della tratta con ID 2 a 120 minuti
+        updateTravelRoute(trd, 3, 56);
+        updateTravelRoute(trd, 4, 85);
+        updateTravelRoute(trd, 5, 135);
+        updateTravelRoute(trd, 6, 90);*/
+
+
+
+
+/*-----------------------------------------------------------------------------------------------------------------------------------SCANNER---------------------------------------*/
         Scanner scanner = new Scanner(System.in);
 
         int n = 0;
@@ -179,7 +229,7 @@ public class Application {
                     System.out.println("Inserisci nuovamente il numero");
                 }
             } while (n <= 0 || n > 2);
-               UUID vendorSave = null;
+            UUID vendorSave = null;
             if (n == 1) {
                 do {
                     System.out.println("Desideri acquistare il biglietto da una macchinetta automatica o da un rivenditore autorizzato?");
@@ -256,7 +306,7 @@ public class Application {
                         case 1:
                             System.out.println("Inserisci il numero corrispondente alla macchinetta che si desidera utilizzare : ");
                             for (int i = 0; i < machines.toArray().length; i++) {
-                                System.out.println((i + 1) + " --- "  + machines.get(i));
+                                System.out.println((i + 1) + " --- " + machines.get(i));
 
                             }
                             int j = Integer.parseInt(scanner.nextLine());
@@ -310,8 +360,8 @@ public class Application {
                 cd.findCardById(inputCard);
                 scanner.nextLine();
                 System.out.println("Nome utente -> " + ud.findUserByCardId(inputCard).getFirstName());
-                System.out.println("Congome utente -> "+ ud.findUserByCardId(inputCard).getLastName());
-                System.out.println("Id Utente -> "  + ud.findUserByCardId(inputCard).getId());
+                System.out.println("Congome utente -> " + ud.findUserByCardId(inputCard).getLastName());
+                System.out.println("Id Utente -> " + ud.findUserByCardId(inputCard).getId());
                 //checkExpirationById(inputCard);
                 // se la carta è scaduta va rinnovata
                 Subscription personaProvaFromDb = sd.findSubscriptionByUuid(sd.findUuidByIdCard(inputCard));
@@ -320,22 +370,22 @@ public class Application {
                 System.out.println("Inserisci 'WEEKLY' o 'MONTHLY'");
 
                 String subTry = scanner.nextLine().toUpperCase();
-                if(subTry.equals("WEEKLY")){
+                if (subTry.equals("WEEKLY")) {
 
                     LocalDate startDate = LocalDate.now();
-                    LocalDate endDate= startDate.plusWeeks(1);
+                    LocalDate endDate = startDate.plusWeeks(1);
 
                     personaProvaFromDb.setStartDate(startDate);
                     personaProvaFromDb.setType(TypeSubscription.WEEKLY);
                     sd.setSubscriptionType(TypeSubscription.WEEKLY, inputCard);
                     personaProvaFromDb.setEndDate(startDate.plusWeeks(1));
-                    sd.setSubscriptionDate(startDate,endDate, inputCard);
+                    sd.setSubscriptionDate(startDate, endDate, inputCard);
 
 
-                }else {
+                } else {
 
                     LocalDate startDate = LocalDate.now();
-                    LocalDate endDate= startDate.plusMonths(1);
+                    LocalDate endDate = startDate.plusMonths(1);
                     personaProvaFromDb.setStartDate(startDate);
                     personaProvaFromDb.setType(TypeSubscription.MONTHLY);
                     sd.setSubscriptionType(TypeSubscription.MONTHLY, inputCard);
@@ -352,126 +402,173 @@ public class Application {
             }
 
 
-        }else{
-            // -----------------------------------------------------------------        ADMIN               ------------------------------------------------
-            System.out.println("Benvenuto nel pannello di amministrazione");
-            System.out.println("Inserisci 1 per visualizzare i veicoli in servizio");
-            System.out.println("Inserisci 2 per visualizzare i veicoli in manutenzione");
-            System.out.println("Inserisci 3 per visualizzare i veicoli non in servizio");
-            System.out.println("Inserisci 4 per visualizzare le tratte percorribili");
-            System.out.println("Inserisci 5 per visualizzare i biglietti vidimati");
-            System.out.println("Inserisci 6 per visualizzare le tratte percorribili da un mezzo specifico");
-            System.out.println("Inserisci 7 per visualizzare le tratte percorribili da un mezzo specifico con il tempo medio di percorrenza");
-            System.out.println("Inserisci 8 per visualizzare i rivenditori autorizzati");
-            System.out.println("Inserisci 9 per visualizzare le macchinette");
-            System.out.println("Inserisci 10 per visualizzare i tram");
-            System.out.println("Inserisci 11 per visualizzare i bus");
-            System.out.println("Inserisci 12 per gestire veicoli e rotte");
-            System.out.println("Inserisci 0 per uscire");
-            n = Integer.parseInt(scanner.nextLine());
-            if (n < 0 || n > 12) {
-                System.out.println("Inserisci nuovamente il numero");
-            }
-        } while (n < 0 || n > 12);
-        if (n == 1) {
-            //visualizza veicoli in servizio
-            System.out.println("Veicoli in servizio:");
-            for (Vehicle vehicle : vd.findAllInServiceVehicles()) {
-                System.out.println(vehicle);
-            }
-        } else if (n == 2) {
-            //visualizza veicoli in manutenzione
-            System.out.println("Veicoli in manutenzione:");
-            for (Vehicle vehicle : vd.findAllMaintenanceVehicles()) {
-                System.out.println(vehicle);
-            }
-        } else if (n == 3) {
-            //visualizza veicoli non in servizio
-            System.out.println("Veicoli non in servizio:");
-            for (Vehicle vehicle : vd.findAllNotInServiceVehicles()) {
-                System.out.println(vehicle);
-            }
-        } else if (n == 4) {
-            //visualizza tratte percorribili
-            System.out.println("Tratte percorribili:");
-            TravelRouteDAO trd = new TravelRouteDAO(em);
-            for (TravelRoute route : trd.findAllRoutes()) {
-                System.out.println(route);
-            }
-        } else if (n == 5) {
-            //visualizza biglietti vidimati
-            System.out.println("Biglietti vidimati:");
-            for (Ticket ticket : ticketDAO.findAllEndorsedTickets()) {
-                System.out.println(ticket);
-            }
-        } else if (n == 6) {
-            //visualizza tratte percorribili da un mezzo specifico
-            System.out.println("Inserisci l'ID del veicolo per visualizzare le tratte percorribili:");
-            long vehicleId = Long.parseLong(scanner.nextLine());
-            Vehicle vehicle = vd.findVehicleById(vehicleId);
-            TravelRouteDAO trd = new TravelRouteDAO(em);
-            System.out.println("Tratte percorribili dal veicolo " + vehicle.getNumberPlate() + ":");
-            for (TravelRoute route : trd.findRoutesByVehicle(vehicle)) {
-                System.out.println(route);
-            }
-        } else if (n == 7) {
-            //visualizza tratte percorribili da un mezzo specifico con il tempo medio di percorrenza
-            System.out.println("Inserisci l'ID del veicolo per visualizzare le tratte percorribili con il tempo medio di percorrenza:");
-            long vehicleId = Long.parseLong(scanner.nextLine());
-            Vehicle vehicle = vd.findVehicleById(vehicleId);
-            TravelRouteDAO trd = new TravelRouteDAO(em);
-            System.out.println("Tratte percorribili dal veicolo " + vehicle.getNumberPlate() + " con il tempo medio di percorrenza:");
-
-            for (TravelRoute route : trd.findRoutesByVehicle(vehicle)) {
-                System.out.println(route + " - Tempo medio di percorrenza: " + route.getActualTravelTime() + " minuti");
-            }
-        } else if (n == 8) {
-            //visualizza rivenditori autorizzati
-            System.out.println("Rivenditori autorizzati:");
-            for (TicketSystem ts : tsd.findAllAuthorizedResellers()) {
-                System.out.println(ts);
-            }
-        } else if (n == 9) {
-            //visualizza macchinette
-            System.out.println("Macchinette:");
-            for (TicketSystem ts : tsd.findAllVendingMachines()) {
-                System.out.println(ts);
-            }
-        } else if (n == 10) {
-            //visualizza tram
-            System.out.println("Tram:");
-            for (Vehicle vehicle : vd.findAllTrams()) {
-                System.out.println(vehicle);
-            }
-        } else if (n == 11) {
-            //visualizza bus
-            System.out.println("Bus:");
-
-            for (Vehicle vehicle : vd.findAllBuses()) {
-                System.out.println(vehicle);
-            }
-        } else if (n == 12) {
-            //gestione veicoli e rotte
-            System.out.println("Gestione veicoli e rotte:");
-            //  implementare la logica per gestire veicoli e rotte
-            //  creare, aggiornare o eliminare veicoli e rotte
-
-            System.out.println("Questa funzionalità è in fase di sviluppo.");
-            // Puoi implementare le seguenti funzionalità:
-            // - Creazione di nuovi veicoli e rotte
-            // - Aggiornamento dello stato dei veicoli
-            // - Associazione di veicoli a rotte specifiche
-            // - Visualizzazione delle rotte disponibili per un veicolo specifico
-            // - Calcolo del tempo medio di percorrenza per una tratta specifica
-            // - Gestione delle tratte e dei veicoli in manutenzione
-            // - Visualizzazione delle tratte percorribili da un mezzo specifico
-            //calcolo tempo medio effettivo di percorrenza tratta da parte di un mezzo
         } else {
-            System.out.println("Uscita dal programma.");
+            // -----------------------------------------------------------------        ADMIN               ------------------------------------------------
+            int sceltaAdmin;
+            do {
+                System.out.println("Benvenuto nel pannello di amministrazione");
+                System.out.println("Inserisci 1 per visualizzare i veicoli in servizio");
+                System.out.println("Inserisci 2 per visualizzare i veicoli in manutenzione");
+                System.out.println("Inserisci 3 per visualizzare le tratte percorribili");
+                System.out.println("Inserisci 4 per visualizzare i biglietti vidimati");
+                System.out.println("Inserisci 5 per visualizzare le tratte percorribili da un mezzo specifico");
+                System.out.println("Inserisci 6 per visualizzare le tratte percorribili da un mezzo specifico con il tempo medio di percorrenza");
+                System.out.println("Inserisci 7 per visualizzare lo storico manutenzione veicoli");
+                System.out.println("Inserisci 8 per visualizzare lo storico manutenzione per un determinato periodo");
+                System.out.println("Inserisci 9 per visualizzare i tram");
+                System.out.println("Inserisci 10 per visualizzare i bus");
 
+                System.out.println("Inserisci 0 per uscire");
+                sceltaAdmin = Integer.parseInt(scanner.nextLine());
 
+                switch (sceltaAdmin) {
+                    case 1:
+                        System.out.println("Veicoli in servizio:");
+                        for (Vehicle vehicle : vd.findAllInServiceVehicles()) {
+                            System.out.println(vehicle);
+                        }
+                        break;
+                    case 2:
+                        System.out.println("Veicoli in manutenzione:");
+                        for (Vehicle vehicle : vd.findAllMaintenanceVehicles()) {
+                            System.out.println(vehicle);
+                        }
+                        break;
+                    case 3:
+                        System.out.println("Tratte percorribili:");
+                        for (TravelRoute route : trd.findAllRoutes()) {
+                            System.out.println(route);
+                        }
+                        break;
+                    case 4:
+                        System.out.println("Biglietti vidimati:");
+                        for (Ticket ticket : ticketDAO.findAllEndorsedTickets()) {
+                            System.out.println(ticket);
+                        }
+
+                        System.out.println("Vuoi vedere il conteggio dei biglietti vidimati?");
+                        System.out.println("1 - Per veicolo");
+                        System.out.println("2 - Per periodo");
+                        int scelta = Integer.parseInt(scanner.nextLine());
+
+                        if (scelta == 1) {
+                            System.out.println("Veicoli disponibili:");
+                            for (Vehicle v : vd.findAllVehicles()) {
+                                System.out.println("ID: " + v.getId() + " - Targa: " + v.getNumberPlate());
+                            }
+                            System.out.println("Inserisci l'ID del veicolo:");
+                            long vehicleId = Long.parseLong(scanner.nextLine());
+                            long count = ticketDAO.countEndorsedTicketsByVehicle(vehicleId);
+                            System.out.println("Biglietti vidimati su questo veicolo: " + count);
+                        } else if (scelta == 2) {
+                            System.out.println("Inserisci la data di inizio (YYYY-MM-DD):");
+                            LocalDate start = LocalDate.parse(scanner.nextLine());
+                            System.out.println("Inserisci la data di fine (YYYY-MM-DD):");
+                            LocalDate end = LocalDate.parse(scanner.nextLine());
+                            long count = ticketDAO.countEndorsedTicketsByPeriod(start, end);
+                            System.out.println("Biglietti vidimati nel periodo: " + count);
+                        }
+                        break;
+                    case 5:
+                        System.out.println("Inserisci l'ID del veicolo per visualizzare le tratte percorribili:");
+                        long vehicleId = Long.parseLong(scanner.nextLine());
+                        Vehicle vehicle = vd.findVehicleById(vehicleId);
+                        trd = new TravelRouteDAO(em);
+                        System.out.println("Tratte percorribili dal veicolo " + vehicle.getNumberPlate() + ":");
+                        for (TravelRoute route : trd.findRoutesByVehicle(vehicle)) {
+                            System.out.println(route);
+                        }
+                        break;
+                    case 6:// Visualizza le tratte percorribili da un veicolo specifico con il tempo medio di percorrenza
+                        System.out.println("Veicoli disponibili:");
+                        for (Vehicle v : vd.findAllVehicles()) {
+                            System.out.println("ID: " + v.getId() + " - " + v.getNumberPlate());
+                        }
+                        System.out.println("Inserisci l'ID del veicolo:");
+                        long vehicleId6 = Long.parseLong(scanner.nextLine());
+                        Vehicle vehicle6 = vd.findVehicleById(vehicleId6);
+
+                        if (vehicle6 == null) {
+                            System.out.println("Veicolo non trovato.");
+                            break;
+                        }
+                        System.out.println("Tratte percorribili dal veicolo:");
+                        for (TravelRoute tr : trd.findRoutesByVehicle(vehicle6)) {
+                            System.out.println("ID tratta: " + tr.getRoute().getId() + " - Da " + tr.getRoute().getStartRoute() + " a " + tr.getRoute().getTerminal());
+                        }
+                        System.out.println("Inserisci l'ID della tratta:");
+                        long routeId = Long.parseLong(scanner.nextLine());
+
+                        Double media = trd.avgTimeByVehicleAndRoute(vehicleId6, routeId);
+                        long count = trd.countTravelsByVehicleAndRoute(vehicleId6,routeId);
+                        if (media == null) {
+                            System.out.println("Nessuna percorrenza registrata per questa tratta e questo veicolo.");
+                        } else {
+                            System.out.println("Tempo medio effettivo di percorrenza: " + media + " minuti.");
+                            System.out.println("Numero percorrenze completate : " + count);
+
+                        }
+                        break;
+                    case 7:
+                        System.out.println("Storico manutenzione veicoli:");
+                        for (VehicleStateLog log : vsld.getAllLogs()) {
+                            System.out.println("ID: " + log.getId() + ", Veicolo: " + log.getVehicle().getNumberPlate() +
+                                    ", Inizio: " + log.getStartDate() + ", Fine: " + log.getEndDate() +
+                                    ", Causa: " + log.getCause());
+                        }
+                        break;
+                    case 8:
+                        System.out.println("Storico manutenzione per un determinato periodo:");
+                        System.out.println("Inserisci la data di inizio (YYYY-MM-DD):");
+                        LocalDate from = LocalDate.parse(scanner.nextLine());
+                        System.out.println("Inserisci la data di fine (YYYY-MM-DD):");
+                        LocalDate to = LocalDate.parse(scanner.nextLine());
+                        List<VehicleStateLog> logs = vsld.getLogsByDateRange(from, to);
+                        if (logs.isEmpty()) {
+                            System.out.println("Nessun log trovato per il periodo specificato.");
+                        } else {
+                            for (VehicleStateLog log : logs) {
+                                System.out.println("ID: " + log.getId() + ", Veicolo: " + log.getVehicle().getNumberPlate() +
+                                        ", Inizio: " + log.getStartDate() + ", Fine: " + log.getEndDate() +
+                                        ", Causa: " + log.getCause());
+                            }
+                        }
+                        break;
+                    case 9:
+                        System.out.println("Tram:");
+                        for (Vehicle v : vd.findAllTrams()) {
+                            System.out.println(v);
+                        }
+                        break;
+                    case 10:
+                        System.out.println("Bus:");
+                        for (Vehicle v : vd.findAllBuses()) {
+                            System.out.println(v);
+                        }
+                        break;
+                    case 0:
+                        System.out.println("Uscita dal pannello amministratore.");
+                        break;
+                    default:
+                        System.out.println("Scelta non valida, riprova.");
+                }
+                System.out.println(); // Riga vuota per separare le operazioni
+            } while (sceltaAdmin != 0);
         }
-        em.close();
-        emf.close();
+            em.close();
+            emf.close();
+        }
+    // updateTravelRoute method
+    private static void updateTravelRoute(TravelRouteDAO trd, long id, int time) {
+        TravelRoute travel = trd.findTravelRouteById(id);
+        try {
+            travel.setActualTravelTime(time);
+            System.out.println("Travel route completed, actual travel time: " + travel.getActualTravelTime() + " mins.");
+            // update in db
+            trd.updateActualTravelTime(travel); // update method from TravelRouteDAO
+            System.out.println("Travel route with ID '" + id + "' has been updated.");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
-}
+    }

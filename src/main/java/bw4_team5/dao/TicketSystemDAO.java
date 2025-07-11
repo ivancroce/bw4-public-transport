@@ -66,7 +66,7 @@ public class TicketSystemDAO {
         if (found == null) throw new UuidNotFoundException(uuid);
         return found;
     }
-
+//da rifare
     public Iterable<? extends TicketSystem> findAllAuthorizedResellers() {
         Iterable<TicketSystem> resellers = entityManager.createQuery("SELECT ts FROM TicketSystem ts WHERE ts.isAuthorized = true", TicketSystem.class)
                 .getResultList();
@@ -75,7 +75,6 @@ public class TicketSystemDAO {
         }
         return resellers;
     }
-
     public Iterable<? extends TicketSystem> findAllVendingMachines() {
         Iterable<TicketSystem> vendingMachines = entityManager.createQuery("SELECT ts FROM TicketSystem ts WHERE ts.isVendingMachine = true", TicketSystem.class)
                 .getResultList();
