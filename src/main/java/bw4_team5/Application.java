@@ -86,6 +86,7 @@ public class Application {
 
         /*TicketSystem machine1FromDb = tsd.findTicketSystemByUuid("1006fb8d-a689-4b5e-9c31-42695b152ab2");
         TicketSystem machine3FromDb = tsd.findTicketSystemByUuid("c84ee2e0-1262-40fc-867c-5354615fa711");
+
         Subscription mariosSub = new Subscription(LocalDate.of(2025, 6, 12), TypeSubscription.MONTHLY, machine1FromDb, mariosCardFromDb);
         Subscription pinosSub = new Subscription(LocalDate.of(2025, 5, 12 ), TypeSubscription.MONTHLY, machine3FromDb, pinosCardFromDb);*/
 
@@ -255,7 +256,7 @@ public class Application {
                         case 1:
                             System.out.println("Inserisci il numero corrispondente alla macchinetta che si desidera utilizzare : ");
                             for (int i = 0; i < machines.toArray().length; i++) {
-                                System.out.println((i + 1) + " --- " + machines.get(i) + machines.get(i).getUuid());
+                                System.out.println((i + 1) + " --- "  + machines.get(i));
 
                             }
                             int j = Integer.parseInt(scanner.nextLine());
@@ -352,7 +353,7 @@ public class Application {
 
 
         }else{
-            // ------------------ADMIN--------------------
+            // -----------------------------------------------------------------        ADMIN               ------------------------------------------------
             System.out.println("Benvenuto nel pannello di amministrazione");
             System.out.println("Inserisci 1 per visualizzare i veicoli in servizio");
             System.out.println("Inserisci 2 per visualizzare i veicoli in manutenzione");

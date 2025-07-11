@@ -6,6 +6,7 @@ import bw4_team5.exceptions.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 public class TravelRouteDAO {
     private final EntityManager entityManager;
@@ -76,5 +77,26 @@ public class TravelRouteDAO {
         System.out.println("Error retrieving travel routes for vehicle: " + e.getMessage());
     }
         return null;
+    }
+    // Counts how many times a specific vehicle has completed a specific route.
+    public long countTravelsByVehicleAndRoute(long vehicleId, long routeId) {
+        TypedQuery<Long> query = entityManager.createQuery(
+                "SELECT COUNT(t) FROM TravelRoute t WHERE t.vehicle.id = :vId AND t.route.id = :rId AND t.actualTravelTime IS NOT NULL"
+                , Long.class);
+        query.setParameter("vId", vehicleId);
+        query.setParameter("rId", routeId);
+
+        return query.getSingleResult();
+    }
+
+    // Average travel time.
+    public Double avgTimeByVehicleAndRoute(long vehicleId, long routeId) {
+        TypedQuery<Double> query = entityManager.createQuery(
+                "SELECT AVG(t.actualTravelTime) FROM TravelRoute t WHERE t.vehicle.id = :vId AND t.route.id = :rId AND t.actualTravelTime IS NOT NULL"
+                , Double.class);
+        query.setParameter("vId", vehicleId);
+        query.setParameter("rId", routeId);
+
+        return query.getSingleResult();
     }
 }
