@@ -218,7 +218,7 @@ public class Application {
         int n = 0;
         do {
             System.out.println("Inserisci 1 per il pannello utente");
-            System.out.println("Inserisci il 2 per il pannello admin");
+            System.out.println("Inserisci 2 per il pannello admin");
             n = Integer.parseInt(scanner.nextLine());
             if (n <= 0 || n > 2) {
                 System.out.println("Inserisci nuovamente il numero");
